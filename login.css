@@ -1,0 +1,72 @@
+html,body{
+    width: 99%;
+    height: 99%;
+    font-family: Circular, Arial, sans-serif;
+    font-weight: bold;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image:
+    linear-gradient(rgba(15,23,43, .7), rgba(24, 32, 55, 0.4)),
+    url("nottinghamBG.jpg");
+
+    background-size: cover;
+    background-position: center; 
+}
+
+
+
+.login{
+    font-family: Circular, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    
+    width: 20rem;
+    height: 30rem;
+
+    border: 1px black solid;
+    border-radius: 0%;
+    margin: 0 auto;
+    padding: 0% auto;
+    background-color: rgb(255, 255, 255);
+}
+
+h2{
+    padding-top: 2rem;
+}
+
+input{
+    width: 15rem;
+    height: 2rem;
+}
+
+#dataRetrival{
+    padding-top: 0rem;
+}
+
+#submitANDreset{
+    padding-top: 2rem;
+}
+
+.loginDone{
+    background-color: #10263B;
+    color: white;
+    font-weight: bold;
+}
+img{
+    padding-top: 2rem;
+    max-width: auto;
+    max-height: 6rem;
+}
+
+#forgotPass{
+    font-size: 0.7rem;
+    padding-left: 9rem
+}
