@@ -13,7 +13,7 @@
         <article class="formBox">
             <form method="post" class="login">
                 <img src="assets\nottinghamLogo.png">
-                <h2>Intership Portal</h2>
+                <h2>Internship Portal</h2>
                 <section id="dataRetrival">
                     
                     <label for="username">Username:</label><br>
