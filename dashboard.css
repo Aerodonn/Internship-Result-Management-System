@@ -161,14 +161,14 @@ a{                                   /* removing any decoration such as colors o
     padding-top: 0.3rem;
 }
 
-.mainDash{
+.mainDash {
     display: flex;
-    justify-content: space-around;  /*align in the middle with other boxes */
+    justify-content: space-between;  
     align-items: center;
     flex-direction: row;
-    flex-wrap: wrap;              /* wrap to next line on smaller screens */
-    gap: 1.5rem;                  /* consistent spacing between boxes */
-    padding: 0 1.5rem;              /* side padding */
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin: 0 3rem 2rem 3rem;        
 }
 
 main {
@@ -178,21 +178,20 @@ main {
 }
 
 
-.totalStudents, .totalAssessors, .pending, .temp{
+.totalStudents, .totalAssessors, .pending, .temp {
+    flex: 1;                        
+    min-width: 12rem;                
     background-color: white;
-    border: 0.1rem solid black;
-    border-radius: 0.5rem;
-    width: 25rem;
-    max-width: 100%;
-    padding: 1.5rem;              
+    border: 0.1rem solid #e0e0e0;  
+    border-radius: 0.8rem;
+    padding: 1.5rem;
     display: flex;
-    justify-content: center;
     align-items: center;
-    text-align: center;
-    transition: all 0.3s ease;   
+    gap: 1rem;
+    transition: all 0.3s ease;
     cursor: pointer;
-    flex-direction: row;
-    gap: 0.1rem;
+    width: auto;                     
+    max-width: 100%;
 }
 
 .StudentIcon, .AssessorIcon, .pendingIcon, .tempIcon{
