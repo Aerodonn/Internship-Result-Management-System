@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 22, 2026 at 12:28 PM
+-- Generation Time: Apr 22, 2026 at 01:21 PM
 -- Server version: 5.7.24
 -- PHP Version: 8.3.1
 
@@ -33,8 +33,16 @@ CREATE TABLE `assessor` (
   `phone_number` varchar(22) DEFAULT NULL,
   `email_address` varchar(128) NOT NULL,
   `organisation` varchar(128) DEFAULT NULL,
-  `assessor_type` enum('Lecturer','Industry Supervisor') NOT NULL
+  `assessor_type` enum('Lecturer','Supervisor') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `assessor`
+--
+
+INSERT INTO `assessor` (`user_id`, `full_name`, `phone_number`, `email_address`, `organisation`, `assessor_type`) VALUES
+(2, 'John Lecturer', '60388430263', 'johnLecturer@gmail.com', 'Nottingham', 'Lecturer'),
+(3, 'John Supervisor', '60320988768', 'johnSupervisor@gmail.com', 'Google', 'Supervisor');
 
 -- --------------------------------------------------------
 
@@ -53,6 +61,13 @@ CREATE TABLE `internship` (
   `report_status` enum('Drafting','In Progress','Suspended','Finalisation','Complete') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `internship`
+--
+
+INSERT INTO `internship` (`intern_id`, `supervisor_id`, `lecturer_id`, `student_id`, `internship_company`, `start_date`, `end_date`, `report_status`) VALUES
+(1, 3, 2, 1, 'Google', '2026-04-22', '2027-04-22', 'In Progress');
+
 -- --------------------------------------------------------
 
 --
@@ -68,10 +83,19 @@ CREATE TABLE `internship_report` (
   `theory_score` decimal(5,2) DEFAULT '0.00',
   `present_score` decimal(5,2) DEFAULT '0.00',
   `clarity_score` decimal(5,2) DEFAULT '0.00',
+  `learning_score` decimal(5,2) DEFAULT '0.00',
   `proj_mgmt_score` decimal(5,2) DEFAULT '0.00',
   `time_mgmt_score` decimal(5,2) DEFAULT '0.00',
   `comment` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `internship_report`
+--
+
+INSERT INTO `internship_report` (`report_id`, `intern_id`, `assessor_id`, `task_score`, `safety_score`, `theory_score`, `present_score`, `clarity_score`, `learning_score`, `proj_mgmt_score`, `time_mgmt_score`, `comment`) VALUES
+(5, 1, 2, 80.00, 80.00, 80.00, 80.00, 80.00, 80.00, 80.00, 80.00, 'Lecturer - Decent guy'),
+(6, 1, 3, 100.00, 100.00, 100.00, 100.00, 100.00, 100.00, 100.00, 100.00, 'Supervisor - Good employee');
 
 -- --------------------------------------------------------
 
@@ -89,6 +113,13 @@ CREATE TABLE `student` (
   `account_status` enum('Active','Graduated','On-leave','Suspended') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`student_id`, `student_reg_number`, `student_name`, `email_address`, `programme`, `enrollment_date`, `account_status`) VALUES
+(1, '20708501', 'John Student', 'johnStudent@gmail.com', 'Computer Science', '2026-04-22', 'Active');
+
 -- --------------------------------------------------------
 
 --
@@ -101,6 +132,15 @@ CREATE TABLE `user_login` (
   `password` varchar(255) NOT NULL,
   `system_role` enum('Admin','Assessor') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `user_login`
+--
+
+INSERT INTO `user_login` (`user_id`, `username`, `password`, `system_role`) VALUES
+(1, 'root', 'root', 'Admin'),
+(2, 'lecturer', 'lecturer', 'Assessor'),
+(3, 'supervisor', 'supervisor', 'Assessor');
 
 --
 -- Indexes for dumped tables
@@ -127,9 +167,8 @@ ALTER TABLE `internship`
 --
 ALTER TABLE `internship_report`
   ADD PRIMARY KEY (`report_id`),
-  ADD UNIQUE KEY `intern_id` (`intern_id`),
-  ADD UNIQUE KEY `assessor_id` (`assessor_id`),
-  ADD UNIQUE KEY `intern_id_2` (`intern_id`,`assessor_id`);
+  ADD UNIQUE KEY `intern_id` (`intern_id`,`assessor_id`),
+  ADD KEY `assessor_id` (`assessor_id`);
 
 --
 -- Indexes for table `student`
@@ -153,19 +192,25 @@ ALTER TABLE `user_login`
 -- AUTO_INCREMENT for table `internship`
 --
 ALTER TABLE `internship`
-  MODIFY `intern_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `intern_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `internship_report`
+--
+ALTER TABLE `internship_report`
+  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user_login`
 --
 ALTER TABLE `user_login`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables

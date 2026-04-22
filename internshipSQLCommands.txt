@@ -11,7 +11,7 @@ CREATE TABLE assessor (
 	phone_number varchar(22), 
 	email_address varchar(128) UNIQUE NOT NULL,
 	organisation varchar(128),
-	assessor_type ENUM('Lecturer', 'Industry Supervisor') NOT NULL,
+	assessor_type ENUM('Lecturer', 'Supervisor') NOT NULL,
 	FOREIGN KEY (user_id) REFERENCES user_login(user_id)
 );
 
@@ -40,14 +40,16 @@ CREATE TABLE internship(
 );
 
 CREATE TABLE internship_report(
-	report_id Int PRIMARY KEY,
-	intern_id Int UNIQUE NOT NULL,
-	assessor_id Int UNIQUE NOT NULL,
+	report_id Int PRIMARY KEY AUTO_INCREMENT,
+	intern_id Int NOT NULL,
+	assessor_id Int NOT NULL,
+	
 	task_score DECIMAL(5,2) DEFAULT 0,
 	safety_score DECIMAL(5,2) DEFAULT 0,
 	theory_score DECIMAL(5,2) DEFAULT 0,
 	present_score DECIMAL(5,2) DEFAULT 0,
 	clarity_score DECIMAL(5,2) DEFAULT 0,
+	learning_score DECIMAL(5,2) DEFAULT 0,
 	proj_mgmt_score DECIMAL(5,2) DEFAULT 0,
 	time_mgmt_score DECIMAL(5,2) DEFAULT 0,
 	comment TEXT,
@@ -55,3 +57,23 @@ CREATE TABLE internship_report(
 	FOREIGN KEY (assessor_id) REFERENCES assessor(user_id),
 	UNIQUE (intern_id, assessor_id)
 );
+
+INSERT INTO user_login VALUES 
+(NULL, "root", "root", "Admin"),
+(NULL, "lecturer", "lecturer", "Assessor"),
+(NULL, "supervisor", "supervisor", "Assessor");
+
+
+INSERT INTO assessor VALUES
+(2, "John Lecturer", "60388430263", "johnLecturer@gmail.com", "Nottingham", "Lecturer"),
+(3, "John Supervisor", "60320988768", "johnSupervisor@gmail.com", "Google", "Supervisor");
+
+INSERT INTO student VALUES
+(NULL, "20708501", "John Student","johnStudent@gmail.com", "Computer Science", "2026-04-22", "Active");
+
+INSERT INTO internship VALUES
+(NULL, 3, 2, 1, "Google", "2026-04-22", "2027-04-22", "In Progress");
+
+INSERT INTO internship_report VALUES
+(NULL, 1, 2, 80, 80, 80, 80, 80, 80, 80, 80, "Lecturer - Decent guy"),
+(NULL, 1, 3, 100, 100, 100, 100, 100, 100, 100, 100, "Supervisor - Good employee");
