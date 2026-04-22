@@ -16,7 +16,7 @@
 
         <nav class="headul">
             <ul>
-                <li class="list"><a href="#"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+                <li class="list"><a href="dashboard.php"><i class="fa-solid fa-house"></i> Dashboard</a></li>
                 <li class="list"><a href="#"><i class="fa-solid fa-user-shield"></i> Admin</a></li>
                 <li class="list"><a href="#"><i class="fa-solid fa-chalkboard-user"></i> Assessor</a></li>
                 <li class="list"><a href="results.php"><i class="fa-solid fa-chart-bar"></i> Result</a></li>

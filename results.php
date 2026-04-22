@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang='en'>
 <head>
@@ -10,14 +12,13 @@
     <header>
         <section class="navimg_logo">
             <a href="#"><img src="assets\nottinghamLogoWhite.png"></a>
-            <!-- <h2>Internship Portal</h2> -->
         </section>
 
         <nav class="headul">
             <ul>
                 <li class="list"><a href="dashboard.php"><i class="fa-solid fa-house"></i> Dashboard</a></li>
                 <li class="list"><a href="#"><i class="fa-solid fa-user-shield"></i> Admin</a></li>
-                <li class="list"><a href="#"><i class="fa-solid fa-chalkboard-user"></i> Assessor</a></li>
+                <li class="list"><a href="myStudents.php"><i class="fa-solid fa-chalkboard-user"></i> Assessor</a></li>
                 <li class="list"><a href="#"><i class="fa-solid fa-chart-bar"></i> Result</a></li>
             </ul>
         </nav>

@@ -4,7 +4,7 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>Page Title</title>
-    <link rel='stylesheet' href='style\dashboard.css'>
+    <link rel='stylesheet' href='style\results.css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
@@ -18,7 +18,7 @@
             <ul>
                 <li class="list"><a href="#"><i class="fa-solid fa-house"></i> Dashboard</a></li>
                 <li class="list"><a href="#"><i class="fa-solid fa-user-shield"></i> Admin</a></li>
-                <li class="list"><a href="#"><i class="fa-solid fa-chalkboard-user"></i> Assessor</a></li>
+                <li class="list"><a href="myStudents.php"><i class="fa-solid fa-chalkboard-user"></i> Assessor</a></li>
                 <li class="list"><a href="results.php"><i class="fa-solid fa-chart-bar"></i> Result</a></li>
             </ul>
         </nav>
@@ -192,7 +192,16 @@
                     </tr>
                 </table>
             </article>
-            <!-- <article class="graph">Test</article> -->
+            <article class="sideBar">
+                <h3>Quick Actions</h3>
+                <div class="quickActionGrid">
+                    <a href="manage_student.php"><i class="fa-solid fa-house"></i> Add Students</a>
+                    <a href="#"><i class="fa-solid fa-user-shield"></i> Assign Internship</a>
+                    <a href="myStudents.php"><i class="fa-solid fa-chalkboard-user"></i> Enter Mark</a>
+                    <a href="results.php"><i class="fa-solid fa-chart-bar"></i> View Result</a>
+                </div>
+            </article>
+            
         </section>
     </main>
 

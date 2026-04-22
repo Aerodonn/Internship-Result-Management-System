@@ -1,38 +1,103 @@
+<?php
+session_start();
+
+
+$host     = "localhost";
+$dbname   = "internship_management_system";
+$username = "root";
+$password = "root";
+
+$conn = new mysqli($host, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+//initalizing
+$error = ""; 
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $inputUsername = trim($_POST['username'] ?? '');
+    $inputPassword = trim($_POST['password'] ?? '');
+
+    if ($inputUsername === '' || $inputPassword === '') {
+        $error = "Please enter both username and password.";
+    } else {
+        //fetching login table data
+        $stmt = $conn->prepare("SELECT UserID, Username, Password, SystemRole FROM userlogin WHERE Username = ?");
+        $stmt->bind_param("s", $inputUsername);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 1) {
+            $user = $result->fetch_assoc();
+
+           //checking if password matches with database
+            $passwordMatch = ($inputPassword === $user['Password']);
+            
+
+            if ($passwordMatch) {
+                //saving user data from database into session so i can use it for future files.
+                $_SESSION['UserID']     = $user['UserID'];
+                $_SESSION['Username']   = $user['Username'];
+                $_SESSION['SystemRole'] = $user['SystemRole'];
+
+                // Redirect based on role
+                if ($user['SystemRole'] === 'Admin') {
+                    header("Location: dashboard.php");
+                } else {
+                    header("Location: manage_student.php");
+                }
+                exit();
+            } else {
+                $error = "Incorrect password.";
+            }
+        } else {
+            $error = "No account found with that username.";
+        }
+
+        $stmt->close();
+    }
+}
+
+$conn->close();
+?>
 <!DOCTYPE html>
 <html lang='en'>
 <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <title>Page Title</title>
-    <link rel='stylesheet' href='style\login.css'>
+    <title>Login — Internship Portal</title>
+    <link rel='stylesheet' href='style/login.css'>
 </head>
 <body>
-        
-    
+
     <section>
         <article class="formBox">
             <form method="post" class="login">
-                <img srcz="assets\nottinghamLogo.png">
+                <img src="assets/nottinghamLogo.png" alt="Nottingham Logo">
                 <h2>Internship Portal</h2>
+
+                <?php if ($error !== ''): ?>
+                    <p class="login-error"><?php echo htmlspecialchars($error); ?></p>
+                <?php endif; ?>
+
                 <section id="dataRetrival">
-                    
-                    <label for="username">Username:</label><br>
-                    <input type="text" id="username" name="username" class="loginInput" ><br><br>
-                    
-                    <label for="password">Password:</label><br>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" class="loginInput"
+                           value="<?php echo htmlspecialchars($_POST['username'] ?? ''); ?>"><br>
+
+                    <label for="password">Password:</label>
                     <input type="password" id="password" name="password" class="loginInput"><br>
-                    <a id="forgotPass" href="#">forgot password?</a><br>
+                    <a id="forgotPass" href="#">Forgot password?</a><br>
                 </section>
 
                 <section id="submitANDreset">
-                    <input type="submit" value="Submit Application" class="loginDone">
+                    <input type="submit" value="Login" class="loginDone">
                 </section>
             </form>
         </article>
     </section>
 
-    <footer>
-
-    </footer>
+    <footer></footer>
 </body>
 </html>
