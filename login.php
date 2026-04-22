@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-
 $host     = "localhost";
 $dbname   = "internship_management_system";
 $username = "root";
@@ -12,18 +11,17 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 //initalizing
-$error = ""; 
-
+$error = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $inputUsername = trim($_POST['username'] ?? '');
     $inputPassword = trim($_POST['password'] ?? '');
-
+    //checking if password matches with database
     if ($inputUsername === '' || $inputPassword === '') {
         $error = "Please enter both username and password.";
     } else {
-        //fetching login table data
-        $stmt = $conn->prepare("SELECT UserID, Username, Password, SystemRole FROM userlogin WHERE Username = ?");
+        // Fixed: table name is user_login, columns are snake_case
+        $stmt = $conn->prepare("SELECT user_id, username, password, system_role FROM user_login WHERE username = ?");
         $stmt->bind_param("s", $inputUsername);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -31,18 +29,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($result->num_rows === 1) {
             $user = $result->fetch_assoc();
 
-           //checking if password matches with database
-            $passwordMatch = ($inputPassword === $user['Password']);
             
+            $passwordMatch = ($inputPassword === $user['password']);
 
             if ($passwordMatch) {
                 //saving user data from database into session so i can use it for future files.
-                $_SESSION['UserID']     = $user['UserID'];
-                $_SESSION['Username']   = $user['Username'];
-                $_SESSION['SystemRole'] = $user['SystemRole'];
 
-                // Redirect based on role
-                if ($user['SystemRole'] === 'Admin') {
+                $_SESSION['UserID']     = $user['user_id'];
+                $_SESSION['Username']   = $user['username'];
+                $_SESSION['SystemRole'] = $user['system_role'];
+
+               
+                if ($user['system_role'] === 'Admin') {
                     header("Location: dashboard.php");
                 } else {
                     header("Location: manage_student.php");
