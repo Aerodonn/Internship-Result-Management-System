@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 22, 2026 at 01:21 PM
+-- Generation Time: Apr 22, 2026 at 05:27 PM
 -- Server version: 5.7.24
 -- PHP Version: 8.3.1
 
@@ -86,7 +86,8 @@ CREATE TABLE `internship_report` (
   `learning_score` decimal(5,2) DEFAULT '0.00',
   `proj_mgmt_score` decimal(5,2) DEFAULT '0.00',
   `time_mgmt_score` decimal(5,2) DEFAULT '0.00',
-  `comment` text
+  `comment` text,
+  `total_marks` decimal(5,2) GENERATED ALWAYS AS ((((((((`task_score` + `safety_score`) + `theory_score`) + `present_score`) + `clarity_score`) + `learning_score`) + `proj_mgmt_score`) + `time_mgmt_score`)) VIRTUAL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
