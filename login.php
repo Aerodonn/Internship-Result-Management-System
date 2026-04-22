@@ -4,7 +4,7 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>Page Title</title>
-    <link rel='stylesheet' href='login.css'>
+    <link rel='stylesheet' href='style\login.css'>
 </head>
 <body>
         
@@ -12,7 +12,7 @@
     <section>
         <article class="formBox">
             <form method="post" class="login">
-                <img src="assets\nottinghamLogo.png">
+                <img srcz="assets\nottinghamLogo.png">
                 <h2>Internship Portal</h2>
                 <section id="dataRetrival">
                     

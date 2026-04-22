@@ -4,13 +4,13 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>Page Title</title>
-    <link rel='stylesheet' href='dashboard.css'>
+    <link rel='stylesheet' href='style\dashboard.css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
     <header>
         <section class="navimg_logo">
-            <img src="assets\nottinghamLogoWhite.png">
+            <a href="#"><img src="assets\nottinghamLogoWhite.png"></a>
             <!-- <h2>Internship Portal</h2> -->
         </section>
 
@@ -19,7 +19,7 @@
                 <li class="list"><a href="#"><i class="fa-solid fa-house"></i> Dashboard</a></li>
                 <li class="list"><a href="#"><i class="fa-solid fa-user-shield"></i> Admin</a></li>
                 <li class="list"><a href="#"><i class="fa-solid fa-chalkboard-user"></i> Assessor</a></li>
-                <li class="list"><a href="#"><i class="fa-solid fa-chart-bar"></i> Result</a></li>
+                <li class="list"><a href="results.php"><i class="fa-solid fa-chart-bar"></i> Result</a></li>
             </ul>
         </nav>
         <section class="navbar_loginUser">
@@ -64,13 +64,13 @@
                         <p>Pending marks</p>
                     </span>
                 </div>
-                <div class="temp">
-                    <span class="tempIcon">
-                        <i class="fa-brands fa-buffer"></i>
+                <div class="result">
+                    <span class="resultIcon">
+                        <i class="fa-solid fa-square-poll-horizontal"></i>  
                     </span>
                     <span>
                         <h2>20</h2>
-                        <p>temp</p>
+                        <p>Result Release</p>
                     </span>
                 </div>
             </article>
@@ -81,7 +81,8 @@
                     <tr>
                         <th>Student ID</th>
                         <th>Name</th>
-                        <th>Assessor</th>
+                        <th>Lecturer</th>
+                        <th>Supervisor</th>
                         <th>Company</th>
                         <th>Status</th>
                     </tr>
@@ -89,6 +90,7 @@
                         <td>20710858</td>
                         <td>MinPyaePhyo</td>
                         <td>Dr Bavani</td>
+                        <td>Johny Dept</td>
                         <td>Google</td>
                         <td>Status</td>
                     </tr>
@@ -96,6 +98,7 @@
                         <td>20710858</td>
                         <td>MinPyaePhyo</td>
                         <td>Dr.Bavani</td>
+                        <td>Johny Dept</td>
                         <td>Google</td>
                         <td>Submitted</td>
                     </tr>
@@ -103,6 +106,7 @@
                         <td>20715651</td>
                         <td>Sivanesan Jeevananthan</td>
                         <td>Dr.Tan</td>
+                        <td>The Rock</td>
                         <td>Petronas</td>
                         <td>Pending</td>
                     </tr>
@@ -110,6 +114,7 @@
                         <td>20708501</td>
                         <td>Ooi You Sheng, Ciaran</td>
                         <td>Dr.Yassir</td>
+                        <td>Jackie Chan</td>
                         <td>Valorant</td>
                         <td>Marking</td>
                     </tr>
@@ -117,6 +122,7 @@
                         <td>20708501</td>
                         <td>Ooi You Sheng, Ciaran</td>
                         <td>Dr.Yassir</td>
+                        <td>Jackie Chan</td>
                         <td>Valorant</td>
                         <td>Marking</td>
                     </tr>
@@ -124,6 +130,7 @@
                         <td>20708501</td>
                         <td>Ooi You Sheng, Ciaran</td>
                         <td>Dr.Yassir</td>
+                        <td>Jackie Chan</td>
                         <td>Valorant</td>
                         <td>Marking</td>
                     </tr>
@@ -131,6 +138,7 @@
                         <td>20708501</td>
                         <td>Ooi You Sheng, Ciaran</td>
                         <td>Dr.Yassir</td>
+                        <td>Jackie Chan</td>
                         <td>Valorant</td>
                         <td>Marking</td>
                     </tr>
@@ -138,6 +146,7 @@
                         <td>20708501</td>
                         <td>Ooi You Sheng, Ciaran</td>
                         <td>Dr.Yassir</td>
+                        <td>Jackie Chan</td>
                         <td>Valorant</td>
                         <td>Marking</td>
                     </tr>
@@ -145,6 +154,7 @@
                         <td>20708501</td>
                         <td>Ooi You Sheng, Ciaran</td>
                         <td>Dr.Yassir</td>
+                        <td>Jackie Chan</td>
                         <td>Valorant</td>
                         <td>Marking</td>
                     </tr>
@@ -152,6 +162,7 @@
                         <td>20708501</td>
                         <td>Ooi You Sheng, Ciaran</td>
                         <td>Dr.Yassir</td>
+                        <td>Jackie Chan</td>
                         <td>Valorant</td>
                         <td>Marking</td>
                     </tr>
@@ -159,6 +170,7 @@
                         <td>20708501</td>
                         <td>Ooi You Sheng, Ciaran</td>
                         <td>Dr.Yassir</td>
+                        <td>Jackie Chan</td>
                         <td>Valorant</td>
                         <td>Marking</td>
                     </tr>
@@ -166,6 +178,7 @@
                         <td>20708501</td>
                         <td>Ooi You Sheng, Ciaran</td>
                         <td>Dr.Yassir</td>
+                        <td>Jackie Chan</td>
                         <td>Valorant</td>
                         <td>Marking</td>
                     </tr>
@@ -173,12 +186,13 @@
                         <td>20708501</td>
                         <td>Ooi You Sheng, Ciaran</td>
                         <td>Dr.Yassir</td>
+                        <td>Jackie Chan</td>
                         <td>Valorant</td>
                         <td>Marking</td>
                     </tr>
                 </table>
             </article>
-            <article class="graph">Test</article>
+            <!-- <article class="graph">Test</article> -->
         </section>
     </main>
 

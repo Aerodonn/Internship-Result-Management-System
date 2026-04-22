@@ -152,7 +152,7 @@ a{                                   /* removing any decoration such as colors o
 }
 
 .Dashboard_msg{                         
-    margin: 2rem;
+    margin: 2rem 2.6rem 2rem 2.6rem;
     padding-left: 1rem;
     text-align: left;
     font-size: 0.9rem;
@@ -167,8 +167,8 @@ a{                                   /* removing any decoration such as colors o
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 1.5rem;
-    margin: 0 3rem 2rem 3rem;        
+    gap: 1.5rem;   
+    margin: 0 3rem 0 3rem; 
 }
 
 main {
@@ -178,7 +178,7 @@ main {
 }
 
 
-.totalStudents, .totalAssessors, .pending, .temp {
+.totalStudents, .totalAssessors, .pending, .result, .marks_submitted{
     flex: 1;                        
     min-width: 12rem;                
     background-color: white;
@@ -189,19 +189,19 @@ main {
     align-items: center;
     gap: 1rem;
     transition: all 0.3s ease;
-    cursor: pointer;
+    cursor: default;
     width: auto;                     
     max-width: 100%;
 }
 
-.StudentIcon, .AssessorIcon, .pendingIcon, .tempIcon{
+.StudentIcon, .AssessorIcon, .pendingIcon, .resultIcon, .marksIcon{
     font-size: 2.5rem;
     padding-right: 1rem;
     color: #10263B;
 }
 
     
-.totalStudents:hover, .totalAssessors:hover, .pending:hover, .temp:hover{
+.totalStudents:hover, .marks_submitted:hover, .pending:hover, .result:hover{
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
@@ -246,17 +246,19 @@ table tr:last-child td {
     border-bottom: none;          /* remove the last row's bottom line */
 }
 
+/* ========================================================================= */
+                                /* Result css */
+/* ============================================================================ */
 
-.graph{
-    background-color: white;
-    border: 0.1rem solid black;
-    width: 10rem;
-    min-width: 10rem;
-    flex-shrink: 0;
-    border-radius: 1rem;
-    text-align: center;  
+.resultSearchBar{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    flex-direction: row;
+    gap: 2rem;
+    margin: 1rem 1rem 1rem 3rem ;
 }
-
 
 
 footer{
