@@ -1,72 +1,102 @@
-html,body{
-    width: 99%;
-    height: 99%;
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
     font-family: Circular, Arial, sans-serif;
     font-weight: bold;
 }
 
-body{
+body {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-image:
-    linear-gradient(rgba(15,23,43, .7), rgba(24, 32, 55, 0.4)),
-    url("nottinghamBG.jpg");
-
+        linear-gradient(rgba(15,23,43, .7), rgba(24, 32, 55, 0.4)),
+        url("../assets/nottinghamBG.jpg");
     background-size: cover;
-    background-position: center; 
+    background-position: center;
 }
 
-
-
-.login{
+.login {
     font-family: Circular, Arial, sans-serif;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
-
-    
     width: 20rem;
-    height: 30rem;
-
-    border: 1px black solid;
-    border-radius: 0%;
-    margin: 0 auto;
-    padding: 0% auto;
-    background-color: rgb(255, 255, 255);
+    min-height: 30rem;
+    border: 1px solid black;
+    background-color: #ffffff;
+    padding-bottom: 2rem;
+    box-sizing: border-box;
 }
 
-h2{
+.login img {
     padding-top: 2rem;
+    max-height: 6rem;
+    width: auto;
 }
 
-input{
+.login h2 {
+    padding-top: 1rem;
+    margin: 0;
+    text-align: center;
+}
+
+
+.login-error {
     width: 15rem;
-    height: 2rem;
+    box-sizing: border-box;
+    color: #c0392b;
+    background-color: #fdecea;
+    border: 1px solid #e74c3c;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-weight: normal;
+    text-align: center;
+    padding: 0.4rem 0.6rem;
+    margin-top: 1rem;
 }
 
-#dataRetrival{
-    padding-top: 0rem;
-}
-
-#submitANDreset{
+#dataRetrival {
+    width: 15rem;
     padding-top: 2rem;
 }
 
-.loginDone{
+#dataRetrival label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+#dataRetrival input {
+    width: 100%;
+    height: 2rem;
+    box-sizing: border-box;
+    margin-bottom: 0.5rem;
+}
+
+#forgotPass {
+    font-size: 0.7rem;
+    display: block;
+    text-align: right;
+}
+
+#submitANDreset {
+    padding-top: 2rem;
+    width: 15rem;
+}
+
+.loginDone {
+    width: 100%;
+    height: 2.4rem;
     background-color: #10263B;
     color: white;
     font-weight: bold;
-}
-img{
-    padding-top: 2rem;
-    max-width: auto;
-    max-height: 6rem;
+    border: none;
+    cursor: pointer;
 }
 
-#forgotPass{
-    font-size: 0.7rem;
-    padding-left: 9rem
+.loginDone:hover {
+    background-color: #1a3a5c;
 }
