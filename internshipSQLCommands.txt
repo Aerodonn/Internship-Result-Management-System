@@ -1,53 +1,57 @@
-CREATE TABLE UserLogin (
-    UserID INT AUTO_INCREMENT PRIMARY KEY,
-    Username varchar(255) NOT NULL,
-    Password varchar(255) NOT NULL,
-    SystemRole ENUM('Admin', 'Assessor') NOT NULL
+CREATE TABLE user_login (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username varchar(255) NOT NULL,
+    password varchar(255) NOT NULL,
+    system_role ENUM('Admin', 'Assessor') NOT NULL
 );
 
-CREATE TABLE Assessor (
-	UserID Int PRIMARY KEY,
-	FullName varchar(255) NOT NULL,
-	PhoneNumber varchar(22), 
-	EmailAddress varchar(128) UNIQUE NOT NULL,
-	Organisation varchar(128),
-	AssessorType ENUM('Lecturer', 'Industry Supervisor') NOT NULL,
-	FOREIGN KEY (UserID) REFERENCES UserLogin(UserID)
+CREATE TABLE assessor (
+	user_id Int PRIMARY KEY,
+	full_name varchar(255) NOT NULL,
+	phone_number varchar(22), 
+	email_address varchar(128) UNIQUE NOT NULL,
+	organisation varchar(128),
+	assessor_type ENUM('Lecturer', 'Industry Supervisor') NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES user_login(user_id)
 );
 
-CREATE TABLE Student (
-	StudentID Int PRIMARY KEY AUTO_INCREMENT,
-	StudentRegNumber varchar(20) NOT NULL UNIQUE,
-	StudentName varchar(255) NOT NULL,
-	EmailAddress varchar(255) UNIQUE NOT NULL,
-	Programme varchar(255),
-	EnrollmentDate DATE,
-	AccountStatus ENUM('Active', 'Graduated', 'On-leave', 'Suspended') DEFAULT 'Active'
+CREATE TABLE student (
+	student_id Int PRIMARY KEY AUTO_INCREMENT,
+	student_reg_number varchar(20) NOT NULL UNIQUE,
+	student_name varchar(255) NOT NULL,
+	email_address varchar(255) UNIQUE NOT NULL,
+	programme varchar(255),
+	enrollment_date DATE,
+	account_status ENUM('Active', 'Graduated', 'On-leave', 'Suspended') DEFAULT 'Active'
 );
 
-CREATE TABLE Internship(
-	InternID Int PRIMARY KEY AUTO_INCREMENT,
-	SupervisorID Int NOT NULL,
-	LecturerID Int NOT NULL,
-	StudentID Int NOT NULL,
-	InternshipCompany varchar(255),
-	StartDate DATE,
-	EndDate DATE,
-	ReportStatus ENUM('Drafting', 'In Progress', 'Suspended', 'Finalisation', 'Complete'),
-	FOREIGN KEY (SupervisorID) REFERENCES Assessor(UserID),
-	FOREIGN KEY (LecturerID) REFERENCES Assessor(UserID),
-	FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
+CREATE TABLE internship(
+	intern_id Int PRIMARY KEY AUTO_INCREMENT,
+	supervisor_id Int NOT NULL,
+	lecturer_id Int NOT NULL,
+	student_id Int NOT NULL,
+	internship_company varchar(255),
+	start_date DATE,
+	end_date DATE,
+	report_status ENUM('Drafting', 'In Progress', 'Suspended', 'Finalisation', 'Complete'),
+	FOREIGN KEY (supervisor_id) REFERENCES assessor(user_id),
+	FOREIGN KEY (lecturer_id) REFERENCES assessor(user_id),
+	FOREIGN KEY (student_id) REFERENCES student(student_id)
 );
 
-CREATE TABLE InternshipReport(
-	InternID Int PRIMARY KEY,
-	taskScore DECIMAL(5,2) DEFAULT 0,
-	safetyScore DECIMAL(5,2) DEFAULT 0,
-	theoryScore DECIMAL(5,2) DEFAULT 0,
-	presentScore DECIMAL(5,2) DEFAULT 0,
-	clarityScore DECIMAL(5,2) DEFAULT 0,
+CREATE TABLE internship_report(
+	report_id Int PRIMARY KEY,
+	intern_id Int UNIQUE NOT NULL,
+	assessor_id Int UNIQUE NOT NULL,
+	task_score DECIMAL(5,2) DEFAULT 0,
+	safety_score DECIMAL(5,2) DEFAULT 0,
+	theory_score DECIMAL(5,2) DEFAULT 0,
+	present_score DECIMAL(5,2) DEFAULT 0,
+	clarity_score DECIMAL(5,2) DEFAULT 0,
 	proj_mgmt_score DECIMAL(5,2) DEFAULT 0,
 	time_mgmt_score DECIMAL(5,2) DEFAULT 0,
 	comment TEXT,
-	FOREIGN KEY (InternID) REFERENCES Internship(InternID)
+	FOREIGN KEY (intern_id) REFERENCES internship(intern_id),
+	FOREIGN KEY (assessor_id) REFERENCES assessor(user_id),
+	UNIQUE (intern_id, assessor_id)
 );
