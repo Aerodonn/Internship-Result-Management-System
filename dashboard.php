@@ -1,3 +1,62 @@
+<?php
+
+session_start();
+
+$host     = "localhost";
+$dbname   = "internship_management_system";
+$username = "root";
+$password = "root";
+
+$conn = new mysqli($host, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$lecturerID = $_SESSION['UserID'] ?? 2; // fallback to 2 for testing
+
+// Fixed: all column names changed to snake_case to match DB schema
+$sql = "
+    SELECT
+        s.student_id            AS student_id,
+        s.student_name          AS student_name,
+        a1.full_name            AS lecturer_name,
+        a2.full_name            AS supervisor_name,
+        i.report_status         AS report_status,
+        i.intern_id             AS intern_id
+    FROM internship i
+    JOIN student   s  ON i.student_id    = s.student_id
+    JOIN assessor  a1 ON i.lecturer_id   = a1.user_id
+    JOIN assessor  a2 ON i.supervisor_id = a2.user_id
+    WHERE i.lecturer_id = ?
+    ORDER BY s.student_name ASC
+";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $lecturerID);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Calculations for summary cards
+$totalStudents = $result->num_rows;
+$TotalAssessors = 0;
+$pending = 0;
+$resultDone = 0;
+
+$rows = $result->fetch_all(MYSQLI_ASSOC);
+
+foreach ($rows as $row) {
+    if ($row['report_status'] === 'Complete') {
+        $resultDone++;
+    } else {
+        $pending++;
+    }
+}
+
+$stmt->close();
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang='en'>
 <head>
@@ -24,10 +83,10 @@
         </nav>
         <section class="navbar_loginUser">
             <article>
-                <p>Username</p>
-                <p>admin</p>
+                <p><?php echo htmlspecialchars($_SESSION['Username'] ?? 'admin'); ?></p>
+                <p><?php echo htmlspecialchars($_SESSION['SystemRole'] ?? 'admin'); ?></p>
             </article>
-            <a>Logout</a>
+            <a href="logout.php">Logout</a>
         </section>
     </header>
     <main>
@@ -42,8 +101,8 @@
                         <i class="fa-solid fa-user-graduate"></i>
                     </span>
                     <span>
-                        <h2>20</h2>
-                        <p>Total students</p>
+                        <h2><?php echo $totalStudents; ?></h2>
+                        <p>Students assigned</p>
                     </span>
                 </div>
                 <div class="totalAssessors">
@@ -51,8 +110,8 @@
                         <i class="fa-solid fa-user-tie"></i>
                     </span>
                     <span>
-                        <h2>20</h2>
-                        <p>Total assessors</p>
+                        <h2><?php echo $TotalAssessors; ?></h2>
+                        <p>Total sssessors</p>
                     </span>
                 </div>
                 <div class="pending">
@@ -60,7 +119,7 @@
                         <i class="fa-regular fa-hourglass-half"></i>
                     </span>
                     <span>
-                        <h2>20</h2>
+                        <h2><?php echo $pending; ?></h2>
                         <p>Pending marks</p>
                     </span>
                 </div>
@@ -69,8 +128,8 @@
                         <i class="fa-solid fa-square-poll-horizontal"></i>  
                     </span>
                     <span>
-                        <h2>20</h2>
-                        <p>Result Release</p>
+                        <h2><?php echo $resultDone; ?></h2>
+                        <p>Result release</p>
                     </span>
                 </div>
             </article>
@@ -78,118 +137,48 @@
         <section class="data">
             <article class="realData">
                 <table>
-                    <tr>
-                        <th>Student ID</th>
-                        <th>Name</th>
-                        <th>Lecturer</th>
-                        <th>Supervisor</th>
-                        <th>Company</th>
-                        <th>Status</th>
-                    </tr>
-                    <tr>
-                        <td>20710858</td>
-                        <td>MinPyaePhyo</td>
-                        <td>Dr Bavani</td>
-                        <td>Johny Dept</td>
-                        <td>Google</td>
-                        <td>Status</td>
-                    </tr>
-                    <tr>
-                        <td>20710858</td>
-                        <td>MinPyaePhyo</td>
-                        <td>Dr.Bavani</td>
-                        <td>Johny Dept</td>
-                        <td>Google</td>
-                        <td>Submitted</td>
-                    </tr>
-                    <tr>
-                        <td>20715651</td>
-                        <td>Sivanesan Jeevananthan</td>
-                        <td>Dr.Tan</td>
-                        <td>The Rock</td>
-                        <td>Petronas</td>
-                        <td>Pending</td>
-                    </tr>
-                    <tr>
-                        <td>20708501</td>
-                        <td>Ooi You Sheng, Ciaran</td>
-                        <td>Dr.Yassir</td>
-                        <td>Jackie Chan</td>
-                        <td>Valorant</td>
-                        <td>Marking</td>
-                    </tr>
-                    <tr>
-                        <td>20708501</td>
-                        <td>Ooi You Sheng, Ciaran</td>
-                        <td>Dr.Yassir</td>
-                        <td>Jackie Chan</td>
-                        <td>Valorant</td>
-                        <td>Marking</td>
-                    </tr>
-                    <tr>
-                        <td>20708501</td>
-                        <td>Ooi You Sheng, Ciaran</td>
-                        <td>Dr.Yassir</td>
-                        <td>Jackie Chan</td>
-                        <td>Valorant</td>
-                        <td>Marking</td>
-                    </tr>
-                    <tr>
-                        <td>20708501</td>
-                        <td>Ooi You Sheng, Ciaran</td>
-                        <td>Dr.Yassir</td>
-                        <td>Jackie Chan</td>
-                        <td>Valorant</td>
-                        <td>Marking</td>
-                    </tr>
-                    <tr>
-                        <td>20708501</td>
-                        <td>Ooi You Sheng, Ciaran</td>
-                        <td>Dr.Yassir</td>
-                        <td>Jackie Chan</td>
-                        <td>Valorant</td>
-                        <td>Marking</td>
-                    </tr>
-                    <tr>
-                        <td>20708501</td>
-                        <td>Ooi You Sheng, Ciaran</td>
-                        <td>Dr.Yassir</td>
-                        <td>Jackie Chan</td>
-                        <td>Valorant</td>
-                        <td>Marking</td>
-                    </tr>
-                    <tr>
-                        <td>20708501</td>
-                        <td>Ooi You Sheng, Ciaran</td>
-                        <td>Dr.Yassir</td>
-                        <td>Jackie Chan</td>
-                        <td>Valorant</td>
-                        <td>Marking</td>
-                    </tr>
-                    <tr>
-                        <td>20708501</td>
-                        <td>Ooi You Sheng, Ciaran</td>
-                        <td>Dr.Yassir</td>
-                        <td>Jackie Chan</td>
-                        <td>Valorant</td>
-                        <td>Marking</td>
-                    </tr>
-                    <tr>
-                        <td>20708501</td>
-                        <td>Ooi You Sheng, Ciaran</td>
-                        <td>Dr.Yassir</td>
-                        <td>Jackie Chan</td>
-                        <td>Valorant</td>
-                        <td>Marking</td>
-                    </tr>
-                    <tr>
-                        <td>20708501</td>
-                        <td>Ooi You Sheng, Ciaran</td>
-                        <td>Dr.Yassir</td>
-                        <td>Jackie Chan</td>
-                        <td>Valorant</td>
-                        <td>Marking</td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Name</th>
+                            <th>Lecturer</th>
+                            <th>Supervisor</th>
+                            <th>Company</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (empty($rows)): ?>
+                            <tr>
+                                <td colspan="7" style="text-align:center;">No students assigned to you yet.</td>
+                            </tr>
+                        <?php else: ?>
+                            <?php foreach ($rows as $row): ?>
+                                <tr> <!-- This basically makes a loop where it iterate through each data and output them  -->
+                                    <td><?php echo htmlspecialchars($row['student_id']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['student_name']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['lecturer_name']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['supervisor_name']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['report_status']); ?></td>
+                                    <td>
+                                        <?php
+                                        $statusClass = match($row['report_status']) {
+                                            'Complete'     => 'status-complete',
+                                            'In Progress'  => 'status-inprogress',
+                                            'Drafting'     => 'status-drafting',
+                                            'Suspended'    => 'status-suspended',
+                                            'Finalisation' => 'status-finalisation',
+                                            default        => ''
+                                        };
+                                        ?>
+                                        <span class="status-badge <?php echo $statusClass; ?>">
+                                            <?php echo htmlspecialchars($row['report_status'] ?? 'N/A'); ?>
+                                        </span>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
                 </table>
             </article>
             <article class="sideBar">

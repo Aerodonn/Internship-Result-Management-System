@@ -303,6 +303,38 @@ table tr:last-child td {
 }
 
 /* ========================================================================= */
+                                /* Manage_student */
+/* ============================================================================ */
+
+.search{
+    margin: 1.5rem 1rem 0 3rem; 
+    width: 20rem;
+    height: 2rem;
+    border-radius: 1rem;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    text-align: left;
+    padding-left: 1.5rem;
+    font-size: 1rem;
+}
+
+.statusSearch{
+    width: 10rem;
+    height: 2rem;
+    border-radius: 1rem;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    text-align: left;
+    padding-left: 1.5rem;
+    font-size: 1rem;
+}
+
+
+
+
+
+
+
+
+/* ========================================================================= */
                                 /* Result css */
 /* ============================================================================ */
 

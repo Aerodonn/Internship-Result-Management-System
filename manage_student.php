@@ -128,7 +128,17 @@ $conn->close();
                 </div>
             </article>
         </section>
-
+        <section class="Searchbar">
+            <input type="search" class="search" placeholder="🔍 Search students…" id="searchStudent">
+            <select class="statusSearch" id="statusFilter">
+                <option value>All Status</option>
+                <option value="Drafting">Drafting</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Suspended">Suspended</option>
+                <option value="Finalisation">Finalisation</option>
+                <option value="Complete">Complete</option>
+            </select>
+        </section>
         <section class="data">
             <article class="realData">
                 <table>
@@ -145,15 +155,14 @@ $conn->close();
                     <tbody>
                         <?php if (empty($rows)): ?>
                             <tr>
-                                <td colspan="7" style="text-align:center;">No students assigned to you yet.</td>
+                                <td colspan="6" style="text-align:center;">No students assigned to you yet.</td>
                             </tr>
                         <?php else: ?>
                             <?php foreach ($rows as $row): ?>
-                                <tr>
+                                <tr>     <!-- This basically makes a loop where it iterate through each data and output them  -->
                                     <td><?php echo htmlspecialchars($row['student_id']); ?></td>
                                     <td><?php echo htmlspecialchars($row['student_name']); ?></td>
                                     <td><?php echo htmlspecialchars($row['programme']); ?></td>
-                                    <!-- Shows the Industry Supervisor assigned to this student -->
                                     <td><?php echo htmlspecialchars($row['supervisor_name']); ?></td>
                                     <td><?php echo htmlspecialchars($row['company']); ?></td>
                                     <td>
@@ -188,3 +197,5 @@ $conn->close();
 
 </body>
 </html>
+
+<script src="javascript.js"></script>
