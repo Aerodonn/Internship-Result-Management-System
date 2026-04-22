@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $host     = "localhost";
 $dbname   = "internship_management_system";
 $username = "root";
@@ -11,28 +13,27 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-session_start();
-$lecturerID = $_SESSION['UserID'] ?? 2; // fallback to 1 for testing
+$lecturerID = $_SESSION['UserID'] ?? 2; // fallback to 2 for testing
 
-//fetching all the data needed for the table
+// Fixed: all column names changed to snake_case to match DB schema
 $sql = "
     SELECT
-        s.StudentID      AS student_id,
-        s.StudentName           AS student_name,
-        s.Programme             AS programme,
-        a1.FullName             AS lecturer_name,
-        a2.FullName             AS supervisor_name,
-        i.InternshipCompany     AS company,
-        i.StartDate             AS start_date,
-        i.EndDate               AS end_date,
-        i.ReportStatus          AS report_status,
-        i.InternID              AS intern_id
+        s.student_id            AS student_id,
+        s.student_name          AS student_name,
+        s.programme             AS programme,
+        a1.full_name            AS lecturer_name,
+        a2.full_name            AS supervisor_name,
+        i.internship_company    AS company,
+        i.start_date            AS start_date,
+        i.end_date              AS end_date,
+        i.report_status         AS report_status,
+        i.intern_id             AS intern_id
     FROM internship i
-    JOIN student   s  ON i.StudentID    = s.StudentID
-    JOIN assessor  a1 ON i.LecturerID   = a1.UserID
-    JOIN assessor  a2 ON i.SupervisorID = a2.UserID
-    WHERE i.LecturerID = ?
-    ORDER BY s.StudentName ASC
+    JOIN student   s  ON i.student_id    = s.student_id
+    JOIN assessor  a1 ON i.lecturer_id   = a1.user_id
+    JOIN assessor  a2 ON i.supervisor_id = a2.user_id
+    WHERE i.lecturer_id = ?
+    ORDER BY s.student_name ASC
 ";
 
 $stmt = $conn->prepare($sql);
@@ -40,12 +41,12 @@ $stmt->bind_param("i", $lecturerID);
 $stmt->execute();
 $result = $stmt->get_result();
 
-//doing some calculations to get totalStudent, marksSubmmited and pending amounts.
-$totalStudents   = $result->num_rows;
-$marksSubmitted  = 0;
-$pending         = 0;
+// Calculations for summary cards
+$totalStudents  = $result->num_rows;
+$marksSubmitted = 0;
+$pending        = 0;
 
-$rows = $result->fetch_all(MYSQLI_ASSOC); // buffer all rows
+$rows = $result->fetch_all(MYSQLI_ASSOC);
 
 foreach ($rows as $row) {
     if ($row['report_status'] === 'Complete') {
@@ -157,7 +158,6 @@ $conn->close();
                                     <td><?php echo htmlspecialchars($row['company']); ?></td>
                                     <td>
                                         <?php
-                                        // Map ReportStatus enum to a CSS class for badge styling
                                         $statusClass = match($row['report_status']) {
                                             'Complete'     => 'status-complete',
                                             'In Progress'  => 'status-inprogress',
@@ -171,7 +171,6 @@ $conn->close();
                                             <?php echo htmlspecialchars($row['report_status'] ?? 'N/A'); ?>
                                         </span>
                                     </td>
-                    
                                 </tr>
                             <?php endforeach; ?>
                         <?php endif; ?>
