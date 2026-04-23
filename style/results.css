@@ -306,8 +306,133 @@ table tr:last-child td {
                                 /* Manage_student */
 /* ============================================================================ */
 
+
+.Searchbar{
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    text-align: center;
+    flex-direction: row;
+    gap: 2rem;
+    margin: 2rem 3.2rem 0rem 3.2rem;
+}
+
+
+.btn-add {
+    background: #1a6e2e;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1.125rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.btn-add:hover {
+    background: #145924;
+}
+
+
+
+.btn-edit, .btn-delete {
+    border: none;
+    padding: 0.4rem 1rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.delete-button {
+    display: inline;
+}
+
+.btn-edit {
+    background: #ffae00;
+    color: #fff;
+    margin-right: 0.2rem;
+}
+
+.btn-delete {
+    background: #e03c3c;
+    color: #fff;
+}
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal {
+    background: #fff;
+    border-radius: 0.6rem;
+    padding: 2rem;
+    max-width: 90%;
+    max-height: 90%;  
+    overflow-y: auto;
+    width: 37rem;
+    box-shadow: 0 0.5rem 2rem rgba(0,0,0,0.2);
+    height: 100%;
+}
+
+.modal h3 {
+    margin-top: 0;
+}
+#addStudentIcon{
+    margin-bottom: 0.3rem;
+}
+
+.modal label {
+    display: block;
+    margin: 0.625rem 0 0.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.modal input, .modal select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 0.0625rem solid #ccc;
+    border-radius: 0.375rem;
+    box-sizing: border-box;
+}
+
+.modal-actions {
+    margin-top: 1.25rem;
+    display: flex;
+    gap: 0.625rem;
+    justify-content: flex-end;
+}
+
+.btn-save {
+    background: #2e7d32;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1.125rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    background: #888;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1.125rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+}
+
 .search{
-    margin: 1.5rem 1rem 0 3rem; 
+    /* margin: 1.5rem 1rem 0 3rem;  */
     width: 20rem;
     height: 2rem;
     border-radius: 1rem;

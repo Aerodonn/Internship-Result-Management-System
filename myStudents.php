@@ -10,7 +10,7 @@
 <body>
     <header>
         <section class="navimg_logo">
-            <a href="#"><img src="assets\nottinghamLogoWhite.png"></a>
+            <a href="#"><img alt="nottingham logo" src="assets\nottinghamLogoWhite.png"></a>
             <!-- <h2>Internship Portal</h2> -->
         </section>
 
@@ -78,6 +78,7 @@
                         <th>End Date</th>
                         <th>Report Status</th>
                         <th>Mark Status</th>
+                        <th>Action</th>
                     </tr>
                     <tr>
                         <td>20710858</td>

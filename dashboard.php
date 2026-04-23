@@ -1,47 +1,38 @@
 <?php
-
 session_start();
 
-$host     = "localhost";
-$dbname   = "internship_management_system";
-$username = "root";
-$password = "root";
-
-$conn = new mysqli($host, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if (!isset($_SESSION['SystemRole']) || $_SESSION['SystemRole'] !== 'Admin') {
+    header("Location: login.php");
+    exit();
 }
 
-$lecturerID = $_SESSION['UserID'] ?? 2; // fallback to 2 for testing
+include 'connect.php';
+include 'prepared_statements.php';
 
-// Fixed: all column names changed to snake_case to match DB schema
+$lecturerID = $_SESSION['UserID'];
+
 $sql = "
     SELECT
-        s.student_id            AS student_id,
-        s.student_name          AS student_name,
-        a1.full_name            AS lecturer_name,
-        a2.full_name            AS supervisor_name,
-        i.report_status         AS report_status,
-        i.intern_id             AS intern_id
+        s.student_id         AS student_id,
+        s.student_name       AS student_name,
+        a1.full_name         AS lecturer_name,
+        a2.full_name         AS supervisor_name,
+        i.internship_company AS company,
+        i.report_status      AS report_status,
+        i.intern_id          AS intern_id
     FROM internship i
-    JOIN student   s  ON i.student_id    = s.student_id
-    JOIN assessor  a1 ON i.lecturer_id   = a1.user_id
-    JOIN assessor  a2 ON i.supervisor_id = a2.user_id
+    JOIN student  s  ON i.student_id  = s.student_id
+    JOIN assessor a1 ON i.lecturer_id = a1.user_id
+    JOIN assessor a2 ON i.supervisor_id = a2.user_id
     WHERE i.lecturer_id = ?
     ORDER BY s.student_name ASC
 ";
 
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $lecturerID);
-$stmt->execute();
-$result = $stmt->get_result();
+$result = executePreparedStatement($sql, [$lecturerID]);
 
-// Calculations for summary cards
 $totalStudents = $result->num_rows;
-$TotalAssessors = 0;
-$pending = 0;
-$resultDone = 0;
+$pending       = 0;
+$resultDone    = 0;
 
 $rows = $result->fetch_all(MYSQLI_ASSOC);
 
@@ -52,9 +43,6 @@ foreach ($rows as $row) {
         $pending++;
     }
 }
-
-$stmt->close();
-$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -111,7 +99,7 @@ $conn->close();
                     </span>
                     <span>
                         <h2><?php echo $TotalAssessors; ?></h2>
-                        <p>Total sssessors</p>
+                        <p>Total Assessors</p>
                     </span>
                 </div>
                 <div class="pending">
