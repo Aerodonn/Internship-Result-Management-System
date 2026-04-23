@@ -209,7 +209,7 @@ $totalAssessor = count($assessors);
             <p>© 2026 University of Nottingham Malaysia — Internship Result Management System — Group 39</p>
         </section>
     </footer>
-<script src="SearchBarDashboard.js"></script>
+<script src="javascript/SearchBarDashboard.js"></script>
 </body>
 </html> 
 

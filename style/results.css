@@ -33,7 +33,7 @@ header{                             /* nav bar flex box stuff */
     top: 0;
     left: 0;
     z-index: 10000;
-    background-color: #10263B;
+    background-color: #10263b;
     box-shadow: 0 0.1rem 0.3rem black;
     overflow: auto;
     color: white;
@@ -211,7 +211,7 @@ main {
 }
 
 
-.totalStudents, .totalAssessors, .pending, .result, .marks_submitted{
+.totalStudents, .totalAssessors, .pending, .result, .marks_submitted, .TotalLecturers, .TotalSupervisors{
     flex: 1;                        
     min-width: 12rem;                
     background-color: white;
@@ -234,7 +234,7 @@ main {
 }
 
     
-.totalStudents:hover, .marks_submitted:hover, .pending:hover, .result:hover, .totalAssessors:hover{
+.totalStudents:hover, .marks_submitted:hover, .pending:hover, .result:hover, .totalAssessors:hover, .TotalLecturers:hover, .TotalSupervisors:hover{
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
@@ -352,7 +352,7 @@ table tr:last-child td {
 
 
 .btn-add {
-    background: #1a6e2e;
+    background: #10263B;
     color: #fff;
     border: none;
     padding: 0.5rem 1.125rem;
@@ -363,7 +363,7 @@ table tr:last-child td {
 }
 
 .btn-add:hover {
-    background: #145924;
+    background: #214e78;
 }
 
 
@@ -381,15 +381,24 @@ table tr:last-child td {
 }
 
 .btn-edit {
-    background: #ffae00;
-    color: #fff;
+    background: #ffffff;
+    color: #000000;
     margin-right: 0.2rem;
+    border: #000000 solid 1px;
+}
+.btn-edit:hover {
+    background: #a4a5a7;
 }
 
+
 .btn-delete {
-    background: #e03c3c;
+    background: #B91C2E;
     color: #fff;
 }
+.btn-delete:hover {
+    background: #ef2038;
+}
+
 
 .form-overlay {
     display: none;

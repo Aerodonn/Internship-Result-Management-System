@@ -11,7 +11,7 @@ if (!isset($_SESSION['SystemRole']) || $_SESSION['SystemRole'] !== 'Admin') {
 
 include 'connect.php';
 include 'prepared_statements.php';
-include 'edit_delete.php';
+include 'action_students.php';
 
 // handle delete
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
@@ -350,7 +350,7 @@ foreach ($rows as $row) {
         </section>
     </footer>
 
-<script src="javascript.js"></script>
+<script src="javascript/Manage_student.js"></script>
 
 </body>
 </html>
