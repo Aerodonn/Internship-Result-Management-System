@@ -5,32 +5,34 @@ function filterTable() {
 
     rows.forEach(row => {
         const content = row.textContent.toLowerCase();
-        //index 5 means status column
-        const rowStatus = row.querySelectorAll('td')[5].textContent.trim();
-        //return true if the searchbar item contains stuff from "content" variable (also works if nothing is enters, it become an empty string so it still return True)
+    
+        const rowStatus = row.querySelectorAll('td')[6].textContent.trim();
+        
         const matchesSearch = content.includes(search);
-        //matchStatus returns true if the current status is empty or the rowStatus are equal to the status search state
         const matchesStatus = status === '' || rowStatus === status;
-        //display row if both matches else hide it
+        
         row.style.display = matchesSearch && matchesStatus ? '' : 'none';
     });
 }
 
-function openEditForm(intern_id, company, start_date, end_date, report_status) {
-        document.getElementById('form_intern_id').value       = intern_id;
-        document.getElementById('form_company').value         = company;
-        document.getElementById('form_start_date').value      = start_date;
-        document.getElementById('form_end_date').value        = end_date;
-        document.getElementById('form_report_status').value   = report_status;
-        document.getElementById('editForm').classList.add('active');
-    }
+
+function openEditForm(student_id, reg_number, name, email, programme, enrollment_date, account_status) {
+    document.getElementById('form_student_id').value     = student_id;
+    document.getElementById('form_reg_number').value     = reg_number;
+    document.getElementById('form_student_name').value   = name;
+    document.getElementById('form_email').value          = email;
+    document.getElementById('form_programme').value      = programme;
+    document.getElementById('form_enrollment_date').value= enrollment_date;
+    document.getElementById('form_account_status').value = account_status;
+    document.getElementById('editForm').classList.add('active');
+}
 
 function closeEditForm() {
-        document.getElementById('editForm').classList.remove('active');
+    document.getElementById('editForm').classList.remove('active');
 }
 
 document.getElementById('editForm').addEventListener('click', function(e) {
-        if (e.target === this) closeEditForm();
+    if (e.target === this) closeEditForm();
 });
 
 function openAddForm() {
@@ -54,7 +56,6 @@ function closeAddForm() {
 document.getElementById('addForm').addEventListener('click', function(e) {
     if (e.target === this) closeAddForm();
 });
-
 
 document.getElementById('searchStudent').addEventListener('input', filterTable);
 document.getElementById('statusFilter').addEventListener('change', filterTable);

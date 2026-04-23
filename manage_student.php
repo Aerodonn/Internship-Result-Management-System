@@ -16,19 +16,21 @@ include 'action_students.php';
 // handle delete
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
-    if ($_POST['action'] === 'delete' && isset($_POST['intern_id'])) {
-        deleteStudent($_POST['intern_id']);
+    if ($_POST['action'] === 'delete' && isset($_POST['student_id'])) {
+        deleteStudent($_POST['student_id']);
         header("Location: manage_student.php");
         exit();
     }
 // handle edit
-    if ($_POST['action'] === 'edit' && isset($_POST['intern_id'])) {
+    if ($_POST['action'] === 'edit' && isset($_POST['student_id'])) {
         updateStudent(
-            $_POST['intern_id'],
-            $_POST['company'],
-            $_POST['start_date'],
-            $_POST['end_date'],
-            $_POST['report_status']
+            $_POST['student_id'],
+            $_POST['student_reg_number'],
+            $_POST['student_name'],
+            $_POST['email_address'],
+            $_POST['programme'],
+            $_POST['enrollment_date'],
+            $_POST['account_status']
         );
         header("Location: manage_student.php");
         exit();
@@ -36,18 +38,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 // handle adding
     if ($_POST['action'] === 'add') {
         addStudent(
-            $_POST['student_regnum'],
+            $_POST['student_reg_number'],
             $_POST['student_name'],
-            $_POST['student_email'],
-            $_POST['student_programme'],
-            $_POST['student_enrollment'],
-            $_POST['student_status'],
-            $_POST['company'],
-            $_POST['start_date'],
-            $_POST['end_date'],
-            $_POST['lecturer_id'],
-            $_POST['supervisor_id'],
-            $_POST['report_status']
+            $_POST['email_address'],
+            $_POST['programme'],
+            $_POST['enrollment_date'],
+            $_POST['account_status']
         );
         header("Location: manage_student.php");
         exit();
@@ -57,26 +53,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
 //selecting the table columns/attributes needed for this page.
 $sql = "
-    SELECT
-        s.student_id            AS student_id,
-        s.student_reg_number    AS student_regnum,
-        s.student_name          AS student_name,
-        s.email_address         AS student_email,
-        s.programme             AS student_programme,
-        s.enrollment_date       AS student_enrollment,
-        s.account_status        AS student_status,
-        a1.full_name            AS lecturer_name,
-        a2.full_name            AS supervisor_name,
-        i.internship_company    AS company,
-        i.start_date            AS start_date,
-        i.end_date              AS end_date,
-        i.report_status         AS report_status,
-        i.intern_id             AS intern_id
-    FROM internship i
-    JOIN student   s  ON i.student_id    = s.student_id
-    JOIN assessor  a1 ON i.lecturer_id   = a1.user_id
-    JOIN assessor  a2 ON i.supervisor_id = a2.user_id
-    ORDER BY s.student_id ASC
+    SELECT  student_id,
+            student_reg_number,
+            student_name,
+            email_address,
+            programme,
+            enrollment_date,
+            account_status 
+    FROM student
+    ORDER BY student_id ASC
 ";
 
 $result = executePreparedStatement($sql, []);
@@ -185,13 +170,13 @@ foreach ($rows as $row) {
                     <thead>
                         <tr>
                             <th>Student ID</th>
+                            <th>Student Registeration Number</th>
                             <th>Name</th>
+                            <th>Email</th>
                             <th>Programme</th>
-                            <th>Supervisor</th>
-                            <th>Lecturer</th>
-                            <th>Company</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>Enrollment Date</th>
+                            <th>Account Status</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody> <!-- If the row are empty, then output message -->
@@ -203,34 +188,22 @@ foreach ($rows as $row) {
                             <?php foreach ($rows as $row): ?>
                                 <tr>
                                     <td><?php echo htmlspecialchars($row['student_id']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['student_reg_number']); ?></td>
                                     <td><?php echo htmlspecialchars($row['student_name']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['student_programme']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['supervisor_name']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['lecturer_name']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['company']); ?></td>
-                                    <td> <!-- Changing the class depending on the status so the program CSS changes accordingly -->
-                                        <?php 
-                                        $statusClass = match($row['report_status']) {
-                                            'Complete'     => 'status-complete',
-                                            'In Progress'  => 'status-inprogress',
-                                            'Drafting'     => 'status-drafting',
-                                            'Suspended'    => 'status-suspended',
-                                            'Finalisation' => 'status-finalisation',
-                                            default        => ''
-                                        };
-                                        ?>
-                                        <span class="status-badge <?php echo $statusClass; ?>">
-                                            <?php echo htmlspecialchars($row['report_status'] ?? 'N/A'); ?>
-                                        </span>
-                                    </td>
+                                    <td><?php echo htmlspecialchars($row['email_address']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['programme']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['enrollment_date']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['account_status']); ?></td>
                                     <td>
                                         <!-- edit button-->
                                         <button class="btn-edit" onclick="openEditForm(  //this put PHP values into javascript function
-                                            '<?php echo htmlspecialchars($row['intern_id']); ?>',
-                                            '<?php echo htmlspecialchars($row['company']); ?>',
-                                            '<?php echo htmlspecialchars($row['start_date']); ?>',
-                                            '<?php echo htmlspecialchars($row['end_date']); ?>',
-                                            '<?php echo htmlspecialchars($row['report_status']); ?>'
+                                            '<?php echo htmlspecialchars($row['student_id']); ?>',
+                                            '<?php echo htmlspecialchars($row['student_reg_number']); ?>',
+                                            '<?php echo htmlspecialchars($row['student_name']); ?>',
+                                            '<?php echo htmlspecialchars($row['email_address']); ?>',
+                                            '<?php echo htmlspecialchars($row['programme']); ?>',
+                                            '<?php echo htmlspecialchars($row['enrollment_date']); ?>',
+                                            '<?php echo htmlspecialchars($row['account_status']); ?>'
                                         )">
                                             <i class="fa-solid fa-pen"></i> Edit
                                         </button>
@@ -238,7 +211,7 @@ foreach ($rows as $row) {
                                         <!-- delete button -->
                                         <form method="POST" class="delete-button" onsubmit="return confirm('Delete this student\'s internship record?')">
                                             <input type="hidden" name="action"    value="delete">
-                                            <input type="hidden" name="intern_id" value="<?php echo htmlspecialchars($row['intern_id']); ?>">
+                                            <input type="hidden" name="student_id" value="<?php echo htmlspecialchars($row['student_id']); ?>">
                                             <button type="submit" class="btn-delete">
                                                 <i class="fa-solid fa-trash"></i> Delete
                                             </button>
@@ -255,99 +228,80 @@ foreach ($rows as $row) {
     
     <!-- Add Student Form -->
     <div class="form-overlay" id="addForm">
-        <div class="form">
-            <h3><i class="fa-solid fa-user-plus" id="addStudentIcon"></i> Add Student</h3>
-            <form method="POST">
-                <input type="hidden" name="action" value="add">
+    <div class="form">
+        <h3><i class="fa-solid fa-user-plus" id="addStudentIcon"></i> Add Student</h3>
+        <form method="POST">
+            <input type="hidden" name="action" value="add">
 
-                <label for="add_student_regnum">Student Registraction Number</label>
-                <input type="text" name="student_regnum" id="add_student_regnum" required>
+            <label for="add_student_reg_number">Student Registration Number</label>
+            <input type="text" name="student_reg_number" id="add_student_reg_number" placeholder="e.g. 20708501" maxlength="8" required>
 
-                <label for="add_student_name">Student Name</label>
-                <input type="text" name="student_name" id="add_student_name" maxlength="70" required>
+            <label for="add_student_name">Student Name</label>
+            <input type="text" name="student_name" id="add_student_name" maxlength="70" required>
 
-                <label for="add_student_email">Student email</label>
-                <input type="email" name="student_email" id="add_student_email" required>
+            <label for="add_email_address">Student Email</label>
+            <input type="email" name="email_address" id="add_email_address" required>
 
-                <label for="add_student_programme">Programme</label>
-                <input type="text" name="student_programme" id="add_student_programme" required>
+            <label for="add_programme">Programme</label>
+            <input type="text" name="programme" id="add_programme" maxlength="50" required>
 
-                <label for="add_student_enrollment">Programme</label>
-                <input type="date" name="student_enrollment" id="add_student_enrollment" required>
+            <label for="add_enrollment_date">Enrollment Date</label>
+            <input type="date" name="enrollment_date" id="add_enrollment_date" required>
 
-                <label for="add_student_status">Student Status</label>
-                <select name="student_status" id="add_student_status">
-                    <option value="Active">Active</option>
-                    <option value="Graduated">Graduated</option>
-                    <option value="On-leave">On-leave</option>
-                    <option value="Suspended">Suspended</option>
-                </select>
+            <label for="add_account_status">Account Status</label>
+            <select name="account_status" id="add_account_status">
+                <option value="Active">Active</option>
+                <option value="Graduated">Graduated</option>
+                <option value="On-leave">On-leave</option>
+                <option value="Suspended">Suspended</option>
+            </select>
 
-                <label for="add_company">Company</label>
-                <input type="text" name="company" id="add_company" maxlength="20" required>
-
-                <label for="add_start_date">Start Date</label>
-                <input type="date" name="start_date" id="add_start_date" required>
-
-                <label for="add_end_date">End Date</label>
-                <input type="date" name="end_date" id="add_end_date" required>
-
-                <label for="add_lecturer_id">Lecturer ID</label>
-                <input type="text" name="lecturer_id" id="add_lecturer_id" required>
-
-                <label for="add_supervisor_id">Supervisor ID</label>
-                <input type="text" name="supervisor_id" id="add_supervisor_id" required>
-
-                <label for="add_report_status">Status</label>
-                <select name="report_status" id="add_report_status">
-                    <option value="Drafting">Drafting</option>
-                    <option value="In Progress">In Progress</option>
-                    <option value="Suspended">Suspended</option>
-                    <option value="Finalisation">Finalisation</option>
-                    <option value="Complete">Complete</option>
-                </select>
-
-                <div class="form-actions">
-                    <button type="button" class="btn-cancel" onclick="closeAddForm()">Cancel</button>
-                    <button type="submit" class="btn-save"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-                </div>
-            </form>
-        </div>
+            <div class="form-actions">
+                <button type="button" class="btn-cancel" onclick="closeAddForm()">Cancel</button>
+                <button type="submit" class="btn-save"><i class="fa-solid fa-floppy-disk"></i> Save Student</button>
+            </div>
+        </form>
     </div>
+</div>
 
     <!-- Edit Form -->
     <div class="form-overlay" id="editForm">
-        <div class="form">
-            <h3><i class="fa-solid fa-pen"></i> Edit Internship Record</h3>
-            <form method="POST">
-                <input type="hidden" name="action"    id="form_action"    value="edit">
-                <input type="hidden" name="intern_id" id="form_intern_id">
+    <div class="form">
+        <h3><i class="fa-solid fa-pen"></i> Edit Student Profile</h3>
+        <form method="POST">
+            <input type="hidden" name="action" value="edit">
+            <input type="hidden" name="student_id" id="form_student_id">
 
-                <label for="form_company">Company</label>
-                <input type="text" name="company" id="form_company" maxlength="20" required>
+            <label for="form_reg_number">Registration Number</label>
+            <input type="text" name="student_reg_number" id="form_reg_number" required>
 
-                <label for="form_start_date">Start Date</label>
-                <input type="date" name="start_date" id="form_start_date" required>
+            <label for="form_student_name">Full Name</label>
+            <input type="text" name="student_name" id="form_student_name" required>
 
-                <label for="form_end_date">End Date</label>
-                <input type="date" name="end_date" id="form_end_date" required>
+            <label for="form_email">Email Address</label>
+            <input type="email" name="email_address" id="form_email" required>
 
-                <label for="form_report_status">Status</label>
-                <select name="report_status" id="form_report_status">
-                    <option value="Drafting">Drafting</option>
-                    <option value="In Progress">In Progress</option>
-                    <option value="Suspended">Suspended</option>
-                    <option value="Finalisation">Finalisation</option>
-                    <option value="Complete">Complete</option>
-                </select>
+            <label for="form_programme">Programme</label>
+            <input type="text" name="programme" id="form_programme" required>
 
-                <div class="form-actions">
-                    <button type="button" class="btn-cancel" onclick="closeEditForm()">Cancel</button>
-                    <button type="submit" class="btn-save"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-                </div>
-            </form>
-        </div>
+            <label for="form_enrollment_date">Enrollment Date</label>
+            <input type="date" name="enrollment_date" id="form_enrollment_date" required>
+
+            <label for="form_account_status">Account Status</label>
+            <select name="account_status" id="form_account_status">
+                <option value="Active">Active</option>
+                <option value="Graduated">Graduated</option>
+                <option value="On-leave">On-leave</option>
+                <option value="Suspended">Suspended</option>
+            </select>
+
+            <div class="form-actions">
+                <button type="button" class="btn-cancel" onclick="closeEditForm()">Cancel</button>
+                <button type="submit" class="btn-save"><i class="fa-solid fa-floppy-disk"></i> Update Profile</button>
+            </div>
+        </form>
     </div>
+</div>
 
     <footer>
         <section class="footer">
