@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+// only allows if current user session's systemRole is admin else it will log you out.
 if (!isset($_SESSION['SystemRole']) || $_SESSION['SystemRole'] !== 'Admin') {
     header("Location: login.php");
     exit();
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     
 }
 
-
+//selecting the table columns/attributes needed for this page.
 $sql = "
     SELECT 
         login.username      AS username,
@@ -65,13 +65,13 @@ $sql = "
 ";
 
 $result = executePreparedStatement($sql, []);
-
+//initalizing
 $totalAssessor = $result->num_rows;
 $totalLecturer = 0;
 $totalSupervisor = 0;
 
 $rows = $result->fetch_all(MYSQLI_ASSOC);
-
+//looping through the report_status column to find "Complete" so we can perform totaling on pending and resultDone variables
 foreach ($rows as $row) {
     if ($row['assessor_type'] === 'Lecturer') {
         $totalLecturer++;
@@ -98,14 +98,17 @@ foreach ($rows as $row) {
         </section>
         <nav class="headul">
             <ul>
-                <li class="list"><a href="dashboard.php"><i class="fa-solid fa-house"></i> Dashboard</a></li>
-                <li class="list"><a href="#"><i class="fa-solid fa-user-shield"></i> Admin</a></li>
-                <li class="list"><a href="#"><i class="fa-solid fa-chalkboard-user"></i> Assessor</a></li>
+                <?php if ($_SESSION['SystemRole'] === 'Admin'): ?><!-- added an if statement so that admin pages are only visabl admin -->
+                    <li class="list"><a href="dashboard.php"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+                <?php endif; ?>
+                <?php if ($_SESSION['SystemRole'] === 'Assessor'): ?><!-- added an if statement so that assessor pages are only visabl assesor-->
+                    <li class="list"><a href="myStudents.php"><i class="fa-solid fa-chalkboard-user"></i> Assessor</a></li>
+                <?php endif; ?>
                 <li class="list"><a href="results.php"><i class="fa-solid fa-chart-bar"></i> Result</a></li>
             </ul>
         </nav>
         <section class="navbar_loginUser">
-            <article>
+            <article> <!-- This show the username and admin/assessor on the navbar -->
                 <p><?php echo htmlspecialchars($_SESSION['Username'] ?? 'admin'); ?></p>
                 <p><?php echo htmlspecialchars($_SESSION['SystemRole'] ?? 'admin'); ?></p>
             </article>
@@ -116,28 +119,28 @@ foreach ($rows as $row) {
     <main>
         <section>
             <article class="Dashboard_msg">
-                <h1>Manage Assessors</h1>
+                <h1>Manage Assessors</h1> 
                 <p>All assessors enrolled in the current internship cycle.</p>
             </article>
 
             <article class="mainDash">
                 <div class="totalAssessors">
                     <span class="StudentIcon"><i class="fa-solid fa-user-graduate"></i></span>
-                    <span>
+                    <span>  <!-- outputing total assessors nums -->
                         <h2><?php echo $totalAssessor; ?></h2>
                         <p>Total Assessors</p>
                     </span>
                 </div>
                 <div class="TotalLecturers">
                     <span class="marksIcon"><i class="fa-solid fa-chalkboard-user"></i></i></i></span>
-                    <span>
+                    <span><!-- outputing total lecturers nums -->
                         <h2><?php echo $totalLecturer; ?></h2>
                         <p>Total Lecturers</p>
                     </span>
                 </div>
                 <div class="TotalSupervisors">
                     <span class="pendingIcon"><i class="fa-solid fa-user-tie"></i></i></span>
-                    <span>
+                    <span><!-- outputing total supervisor nums -->
                         <h2><?php echo $totalSupervisor; ?></h2>
                         <p>Total Supervisors</p>
                     </span>
@@ -176,23 +179,23 @@ foreach ($rows as $row) {
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody> <!-- If the row are empty, then output message -->
                         <?php if (empty($rows)): ?>
                             <tr>
-                                <td colspan="6" style="text-align:center;">No students found.</td>
+                                <td colspan="6" style="text-align:center;">No assessor found.</td>
                             </tr>
-                        <?php else: ?>
+                        <?php else: ?> <!-- if not, loop through each rows of data and output each attribute values -->
                             <?php foreach ($rows as $row): ?>
-                                <tr>
+                                <tr>   
                                     <td><?php echo htmlspecialchars($row['user_id']); ?></td>
                                     <td><?php echo htmlspecialchars($row['full_name']); ?></td>
                                     <td><?php echo htmlspecialchars($row['phone_number']); ?></td>
                                     <td><?php echo htmlspecialchars($row['email_address']); ?></td>
                                     <td><?php echo htmlspecialchars($row['organisation']); ?></td>
                                     <td><?php echo htmlspecialchars($row['assessor_type']); ?></td>
-                                    <td>
+                                    <td> 
                                         <!-- edit button-->
-                                        <button class="btn-edit" onclick="openEditForm(
+                                        <button class="btn-edit" onclick="openEditForm(   //this put PHP values into javascript function
                                             '<?php echo htmlspecialchars($row['user_id']); ?>',
                                             '<?php echo htmlspecialchars($row['full_name']); ?>',
                                             '<?php echo htmlspecialchars($row['phone_number']); ?>',

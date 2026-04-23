@@ -246,7 +246,7 @@ main {
     justify-content: center;  /*align in the middle with other boxes */
     align-items: flex-start ;
     flex-direction: row;
-    margin: 2rem 3rem;            /* moved margin so the format is clear */
+    margin: 1rem 3rem;            /* moved margin so the format is clear */
     gap: 2rem;
 }
 
@@ -259,38 +259,41 @@ main {
 
 .sideBar {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    flex-direction: row;
     background-color: white;
-    border: 1px solid #e0e0e0;
+    padding: 1rem;
+    gap: 1rem;
     border-radius: 0.8rem;
-    padding: 1.2rem;
     width: auto;
     min-width: 2rem;
     align-self: flex-start;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    align-items: center;
+    
 }
 
-.sideBar h3 {
+/* .sideBar h3 {
     font-size: 0.95rem;
     font-weight: bold;
     color: #10263B;
     margin-bottom: 0.2rem;
-}
+} */
 
 .sideBar .quickActionGrid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.6rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    height: 100%;
 }
+
+
 
 .sideBar .quickActionGrid a {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 0.4rem;
-    background-color: #f4f6f8;
+    background-color: #f9f8f5;
     border: 1px solid #d0d7de;
     border-radius: 0.5rem;
     padding: 0.8rem 0.5rem;
@@ -340,6 +343,16 @@ table tr:last-child td {
 /* ============================================================================ */
 
 
+.SearchbarDash{
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    text-align: center;
+    flex-direction: row;
+    gap: 2rem;
+    margin: 2rem 3.2rem 0rem 3.2rem;
+}
+
 .Searchbar{
     display: flex;
     align-items: center;
@@ -349,6 +362,8 @@ table tr:last-child td {
     gap: 2rem;
     margin: 2rem 3.2rem 0rem 3.2rem;
 }
+
+
 
 
 .btn-add {

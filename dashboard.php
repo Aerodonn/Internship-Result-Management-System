@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+// only allows if current user session's systemRole is admin else it will log you out.
 if (!isset($_SESSION['SystemRole']) || $_SESSION['SystemRole'] !== 'Admin') {
     header("Location: login.php");
     exit();
@@ -9,8 +9,7 @@ if (!isset($_SESSION['SystemRole']) || $_SESSION['SystemRole'] !== 'Admin') {
 include 'connect.php';
 include 'prepared_statements.php';
 
-$lecturerID = $_SESSION['UserID'];
-
+//selecting the table columns/attributes needed for this page.
 $sql = "
     SELECT
         s.student_id         AS student_id,
@@ -19,7 +18,8 @@ $sql = "
         a2.full_name         AS supervisor_name,
         i.internship_company AS company,
         i.report_status      AS report_status,
-        i.intern_id          AS intern_id
+        i.intern_id          AS intern_id,
+        a1.assessor_type     AS assessor_type
     FROM internship i
     JOIN student  s  ON i.student_id  = s.student_id
     JOIN assessor a1 ON i.lecturer_id = a1.user_id
@@ -28,14 +28,14 @@ $sql = "
 ";
 
 $result = executePreparedStatement($sql, []);
+$rows = $result->fetch_all(MYSQLI_ASSOC);
 
+//initalizing 
 $totalStudents = $result->num_rows;
 $pending = 0;
 $resultDone = 0;
-$totalAssessor = 0;
 
-$rows = $result->fetch_all(MYSQLI_ASSOC);
-
+//looping through the report_status column to find "Complete" so we can perform totaling on pending and resultDone variables
 foreach ($rows as $row) {
     if ($row['report_status'] === 'Complete') {
         $resultDone++;
@@ -43,14 +43,12 @@ foreach ($rows as $row) {
         $pending++;
     }
 }
-$assessors = [];
+//assessing the assessor table data to get the total count of assessor
+$assessor_sql = "SELECT COUNT(*) AS total_count FROM assessor";
+$assessor_result = executePreparedStatement($assessor_sql, []);
+$assessor_row = $assessor_result->fetch_assoc();
 
-foreach ($rows as $row) {
-    $assessors[$row['lecturer_id']] = true;
-    $assessors[$row['supervisor_id']] = true;
-}
-
-$totalAssessor = count($assessors);
+$totalAssessor = $assessor_row['total_count'];
 
 ?>
 
@@ -61,7 +59,8 @@ $totalAssessor = count($assessors);
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>Page Title</title>
     <link rel='stylesheet' href='style\results.css'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+     <!-- i used Awesome Font website's fonts so i added a link to it to assess the font. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">    
 </head>
 <body>
     <header>
@@ -72,14 +71,17 @@ $totalAssessor = count($assessors);
 
         <nav class="headul">
             <ul>
-                <li class="list"><a href="#"><i class="fa-solid fa-house"></i> Dashboard</a></li>
-                <li class="list"><a href="#"><i class="fa-solid fa-user-shield"></i> Admin</a></li>
-                <li class="list"><a href="myStudents.php"><i class="fa-solid fa-chalkboard-user"></i> Assessor</a></li>
+                <?php if ($_SESSION['SystemRole'] === 'Admin'): ?> <!-- added an if statement so that admin pages are only visabl admin -->
+                    <li class="list"><a href="dashboard.php"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+                <?php endif; ?>
+                <?php if ($_SESSION['SystemRole'] === 'Assessor'): ?><!-- added an if statement so that assessor pages are only visabl assesor-->
+                    <li class="list"><a href="myStudents.php"><i class="fa-solid fa-chalkboard-user"></i> Assessor</a></li>
+                <?php endif; ?>
                 <li class="list"><a href="results.php"><i class="fa-solid fa-chart-bar"></i> Result</a></li>
             </ul>
         </nav>
         <section class="navbar_loginUser">
-            <article>
+            <article>   <!-- This show the username and admin/assessor on the navbar -->
                 <p><?php echo htmlspecialchars($_SESSION['Username'] ?? 'admin'); ?></p>
                 <p><?php echo htmlspecialchars($_SESSION['SystemRole'] ?? 'admin'); ?></p>
             </article>
@@ -89,7 +91,7 @@ $totalAssessor = count($assessors);
     <main>
         <section>
             <article class="Dashboard_msg">
-                <h1>Dashboard</h1>
+                <h1>Dashboard</h1>      <!-- This show the username in the paragraph section on top of the page.-->
                 <p>Welcome back Mr <span><?php echo htmlspecialchars($_SESSION['Username'] ?? 'admin'); ?></span></p>
             </article>
             <article class="mainDash">
@@ -97,7 +99,7 @@ $totalAssessor = count($assessors);
                     <span class="StudentIcon">
                         <i class="fa-solid fa-user-graduate"></i>
                     </span>
-                    <span>
+                    <span>  <!-- outputing totalStudent nums -->
                         <h2><?php echo $totalStudents; ?></h2>
                         <p>Total Students</p>
                     </span>
@@ -106,7 +108,7 @@ $totalAssessor = count($assessors);
                     <span class="AssessorIcon">
                         <i class="fa-solid fa-user-tie"></i>
                     </span>
-                    <span>
+                    <span>   <!-- outputing totalAssessor nums -->
                         <h2><?php echo $totalAssessor; ?></h2>
                         <p>Total Assessors</p>
                     </span>
@@ -115,7 +117,7 @@ $totalAssessor = count($assessors);
                     <span class="pendingIcon">
                         <i class="fa-regular fa-hourglass-half"></i>
                     </span>
-                    <span>
+                    <span>  <!-- outputing total pending nums -->
                         <h2><?php echo $pending; ?></h2>
                         <p>Pending marks</p>
                     </span>
@@ -124,14 +126,14 @@ $totalAssessor = count($assessors);
                     <span class="resultIcon">
                         <i class="fa-solid fa-square-poll-horizontal"></i>  
                     </span>
-                    <span>
+                    <span>  <!-- outputing total result done -->
                         <h2><?php echo $resultDone; ?></h2>
                         <p>Result release</p>
                     </span>
                 </div>
             </article>
         </section>
-        <section class="Searchbar">
+        <section class="SearchbarDash">
             <div>
                 <input type="search" class="search" placeholder="🔍 Search students…" id="searchStudent">
                 <select class="statusSearch" id="statusFilter">
@@ -142,6 +144,15 @@ $totalAssessor = count($assessors);
                     <option value="Finalisation">Finalisation</option>
                     <option value="Complete">Complete</option>
                 </select>
+            </div>
+            <div>
+                <article class="sideBar">
+                <div class="quickActionGrid">
+                    <a href="manage_student.php"><i class="fa-solid fa-user-graduate"></i> Manage Students</a>
+                    <a href="manage_assessor.php"><i class="fa-solid fa-user-tie"></i></i>Manage Assessor</a>
+                    <a href="#"><i class="fa-solid fa-user-shield"></i> Assign Internship</a>
+                </div>
+            </article>
             </div>
         </section>
         <section class="data">
@@ -157,20 +168,20 @@ $totalAssessor = count($assessors);
                             <th>Status</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody>  <!-- If the row are empty, then output message -->
                         <?php if (empty($rows)): ?>
                             <tr>
                                 <td colspan="6" style="text-align:center;">No students assigned to you yet.</td>
                             </tr>
-                        <?php else: ?>
+                        <?php else: ?> <!-- if not, loop through each rows of data and output each attribute values -->
                             <?php foreach ($rows as $row): ?>
-                                <tr> <!-- This basically makes a loop where it iterate through each data and output them  -->
+                                <tr>
                                     <td><?php echo htmlspecialchars($row['student_id']); ?></td>
                                     <td><?php echo htmlspecialchars($row['student_name']); ?></td>
                                     <td><?php echo htmlspecialchars($row['lecturer_name']); ?></td>
                                     <td><?php echo htmlspecialchars($row['supervisor_name']); ?></td>
                                     <td><?php echo htmlspecialchars($row['company']); ?></td>
-                                    <td>
+                                    <td> <!-- Changing the class depending on the status so the program CSS changes accordingly -->
                                         <?php
                                         $statusClass = match($row['report_status']) {
                                             'Complete'     => 'status-complete',
@@ -191,16 +202,7 @@ $totalAssessor = count($assessors);
                     </tbody>
                 </table>
             </article>
-            <article class="sideBar">
-                <h3>Quick Actions</h3>
-                <div class="quickActionGrid">
-                    <a href="manage_student.php"><i class="fa-solid fa-house"></i> Add Students</a>
-                    <a href="#"><i class="fa-solid fa-user-shield"></i> Assign Internship</a>
-                    <a href="myStudents.php"><i class="fa-solid fa-chalkboard-user"></i> Enter Mark</a>
-                    <a href="results.php"><i class="fa-solid fa-chart-bar"></i> View Result</a>
-                </div>
-            </article>
-            
+
         </section>
     </main>
 
@@ -209,7 +211,7 @@ $totalAssessor = count($assessors);
             <p>© 2026 University of Nottingham Malaysia — Internship Result Management System — Group 39</p>
         </section>
     </footer>
-<script src="javascript/SearchBarDashboard.js"></script>
+<script src="/SearchBarDashboard.js"></script>
 </body>
 </html> 
 

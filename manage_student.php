@@ -3,7 +3,7 @@
 
 
 session_start();
-
+// only allows if current user session's systemRole is admin else it will log you out.
 if (!isset($_SESSION['SystemRole']) || $_SESSION['SystemRole'] !== 'Admin') {
     header("Location: login.php");
     exit();
@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     
 }
 
-
+//selecting the table columns/attributes needed for this page.
 $sql = "
     SELECT
         s.student_id            AS student_id,
@@ -76,7 +76,7 @@ $sql = "
     JOIN student   s  ON i.student_id    = s.student_id
     JOIN assessor  a1 ON i.lecturer_id   = a1.user_id
     JOIN assessor  a2 ON i.supervisor_id = a2.user_id
-    ORDER BY s.student_name ASC
+    ORDER BY s.student_id ASC
 ";
 
 $result = executePreparedStatement($sql, []);
@@ -86,7 +86,7 @@ $marksSubmitted = 0;
 $pending = 0;
 
 $rows = $result->fetch_all(MYSQLI_ASSOC);
-
+//looping through the report_status column to find "Complete" so we can perform totaling on pending and resultDone variables
 foreach ($rows as $row) {
     if ($row['report_status'] === 'Complete') {
         $marksSubmitted++;
@@ -112,9 +112,12 @@ foreach ($rows as $row) {
         </section>
         <nav class="headul">
             <ul>
-                <li class="list"><a href="dashboard.php"><i class="fa-solid fa-house"></i> Dashboard</a></li>
-                <li class="list"><a href="#"><i class="fa-solid fa-user-shield"></i> Admin</a></li>
-                <li class="list"><a href="#"><i class="fa-solid fa-chalkboard-user"></i> Assessor</a></li>
+                <?php if ($_SESSION['SystemRole'] === 'Admin'): ?>
+                    <li class="list"><a href="dashboard.php"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+                <?php endif; ?>
+                <?php if ($_SESSION['SystemRole'] === 'Assessor'): ?>
+                    <li class="list"><a href="myStudents.php"><i class="fa-solid fa-chalkboard-user"></i> Assessor</a></li>
+                <?php endif; ?>
                 <li class="list"><a href="results.php"><i class="fa-solid fa-chart-bar"></i> Result</a></li>
             </ul>
         </nav>
@@ -184,27 +187,29 @@ foreach ($rows as $row) {
                             <th>Student ID</th>
                             <th>Name</th>
                             <th>Programme</th>
-                            <th>Assessor</th>
+                            <th>Supervisor</th>
+                            <th>Lecturer</th>
                             <th>Company</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody> <!-- If the row are empty, then output message -->
                         <?php if (empty($rows)): ?>
                             <tr>
                                 <td colspan="7" style="text-align:center;">No students found.</td>
                             </tr>
-                        <?php else: ?>
+                        <?php else: ?> <!-- if not, loop through each rows of data and output each attribute values -->
                             <?php foreach ($rows as $row): ?>
                                 <tr>
                                     <td><?php echo htmlspecialchars($row['student_id']); ?></td>
                                     <td><?php echo htmlspecialchars($row['student_name']); ?></td>
                                     <td><?php echo htmlspecialchars($row['student_programme']); ?></td>
                                     <td><?php echo htmlspecialchars($row['supervisor_name']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['lecturer_name']); ?></td>
                                     <td><?php echo htmlspecialchars($row['company']); ?></td>
-                                    <td>
-                                        <?php
+                                    <td> <!-- Changing the class depending on the status so the program CSS changes accordingly -->
+                                        <?php 
                                         $statusClass = match($row['report_status']) {
                                             'Complete'     => 'status-complete',
                                             'In Progress'  => 'status-inprogress',
@@ -220,7 +225,7 @@ foreach ($rows as $row) {
                                     </td>
                                     <td>
                                         <!-- edit button-->
-                                        <button class="btn-edit" onclick="openEditForm(
+                                        <button class="btn-edit" onclick="openEditForm(  //this put PHP values into javascript function
                                             '<?php echo htmlspecialchars($row['intern_id']); ?>',
                                             '<?php echo htmlspecialchars($row['company']); ?>',
                                             '<?php echo htmlspecialchars($row['start_date']); ?>',
@@ -259,7 +264,7 @@ foreach ($rows as $row) {
                 <input type="text" name="student_regnum" id="add_student_regnum" required>
 
                 <label for="add_student_name">Student Name</label>
-                <input type="text" name="student_name" id="add_student_name" required>
+                <input type="text" name="student_name" id="add_student_name" maxlength="70" required>
 
                 <label for="add_student_email">Student email</label>
                 <input type="email" name="student_email" id="add_student_email" required>
@@ -279,7 +284,7 @@ foreach ($rows as $row) {
                 </select>
 
                 <label for="add_company">Company</label>
-                <input type="text" name="company" id="add_company" required>
+                <input type="text" name="company" id="add_company" maxlength="20" required>
 
                 <label for="add_start_date">Start Date</label>
                 <input type="date" name="start_date" id="add_start_date" required>
@@ -319,7 +324,7 @@ foreach ($rows as $row) {
                 <input type="hidden" name="intern_id" id="form_intern_id">
 
                 <label for="form_company">Company</label>
-                <input type="text" name="company" id="form_company" required>
+                <input type="text" name="company" id="form_company" maxlength="20" required>
 
                 <label for="form_start_date">Start Date</label>
                 <input type="date" name="start_date" id="form_start_date" required>

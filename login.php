@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['SystemRole'] = $user['system_role'];
 
                 if ($user['system_role'] === 'Admin') {
-                    header("Location: manage_student.php");
+                    header("Location: dashboard.php");
                 } else {
                     header("Location: myStudents.php");
                 }
