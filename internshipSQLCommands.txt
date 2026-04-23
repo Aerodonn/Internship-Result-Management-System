@@ -93,5 +93,6 @@ INSERT INTO user_login VALUES
 (NULL, "steveMario", "terraria", "Supervisor");
 
 INSERT INTO assessor VALUES 
-(9, "Adam Conover", "ruinsEverything", "60384347632", "adamConover@gmail.com", "Dropout", "Supervisor"),
-(10, "steveMario", "SuperMarioGalaxy", "60123347672", "steveJannesson@gmail.com", "Nottingham", "Lecturer");
+(9, "Adam Conover", "60384347632", "adamConover@gmail.com", "Dropout", "Supervisor"),
+(10, "steveMario", "60123347672", "steveJannesson@gmail.com", "Nottingham", "Lecturer");
+(12, "Jaya Kumar", "60324592304", "
