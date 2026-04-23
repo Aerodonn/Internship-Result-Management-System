@@ -161,6 +161,39 @@ a{                                   /* removing any decoration such as colors o
     padding-top: 0.3rem;
 }
 
+.status-badge{
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    padding: .2rem .6rem;
+    border-radius: 999px;
+    font-size: .72rem;
+    font-weight: bolder;
+}
+.status-complete{
+    background: #dcfce7;
+    color: #15803d;
+}
+.status-inprogress{
+    background: #fef9c3;
+    color: #854d0e;
+}
+.status-drafting{
+    background: #dbeafe;
+    color: #1e40af;
+}
+.status-suspended{
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.status-finalisation{
+    background: #ede9fe;
+    color: #5b21b6;
+}
+
+
+
 .mainDash {
     display: flex;
     justify-content: space-between;  
@@ -358,7 +391,7 @@ table tr:last-child td {
     color: #fff;
 }
 
-.modal-overlay {
+.form-overlay {
     display: none;
     position: fixed;
     inset: 0;
@@ -368,11 +401,11 @@ table tr:last-child td {
     align-items: center;
 }
 
-.modal-overlay.active {
+.form-overlay.active {
     display: flex;
 }
 
-.modal {
+.form {
     background: #fff;
     border-radius: 0.6rem;
     padding: 2rem;
@@ -381,24 +414,24 @@ table tr:last-child td {
     overflow-y: auto;
     width: 37rem;
     box-shadow: 0 0.5rem 2rem rgba(0,0,0,0.2);
-    height: 100%;
+    height: auto;
 }
 
-.modal h3 {
+.form h3 {
     margin-top: 0;
 }
 #addStudentIcon{
     margin-bottom: 0.3rem;
 }
 
-.modal label {
+.form label {
     display: block;
     margin: 0.625rem 0 0.25rem;
     font-size: 0.9rem;
     font-weight: 600;
 }
 
-.modal input, .modal select {
+.form input, .form select {
     width: 100%;
     padding: 0.5rem;
     border: 0.0625rem solid #ccc;
@@ -406,7 +439,7 @@ table tr:last-child td {
     box-sizing: border-box;
 }
 
-.modal-actions {
+.form-actions {
     margin-top: 1.25rem;
     display: flex;
     gap: 0.625rem;

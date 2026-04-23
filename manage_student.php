@@ -81,9 +81,9 @@ $sql = "
 
 $result = executePreparedStatement($sql, []);
 
-$totalStudents  = $result->num_rows;
+$totalStudents = $result->num_rows;
 $marksSubmitted = 0;
-$pending        = 0;
+$pending = 0;
 
 $rows = $result->fetch_all(MYSQLI_ASSOC);
 
@@ -171,7 +171,7 @@ foreach ($rows as $row) {
                     <option value="Complete">Complete</option>
                 </select>
             </div>
-            <button class="btn-add" onclick="openAddModal()">
+            <button class="btn-add" onclick="openAddForm()">
                 <i class="fa-solid fa-user-plus"></i> Add Student
             </button>
         </section>
@@ -220,7 +220,7 @@ foreach ($rows as $row) {
                                     </td>
                                     <td>
                                         <!-- edit button-->
-                                        <button class="btn-edit" onclick="openEditModal(
+                                        <button class="btn-edit" onclick="openEditForm(
                                             '<?php echo htmlspecialchars($row['intern_id']); ?>',
                                             '<?php echo htmlspecialchars($row['company']); ?>',
                                             '<?php echo htmlspecialchars($row['start_date']); ?>',
@@ -249,8 +249,8 @@ foreach ($rows as $row) {
     </main>
     
     <!-- Add Student Form -->
-    <div class="modal-overlay" id="addModal">
-        <div class="modal">
+    <div class="form-overlay" id="addForm">
+        <div class="form">
             <h3><i class="fa-solid fa-user-plus" id="addStudentIcon"></i> Add Student</h3>
             <form method="POST">
                 <input type="hidden" name="action" value="add">
@@ -302,8 +302,8 @@ foreach ($rows as $row) {
                     <option value="Complete">Complete</option>
                 </select>
 
-                <div class="modal-actions">
-                    <button type="button" class="btn-cancel" onclick="closeAddModal()">Cancel</button>
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="closeAddForm()">Cancel</button>
                     <button type="submit" class="btn-save"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                 </div>
             </form>
@@ -311,24 +311,24 @@ foreach ($rows as $row) {
     </div>
 
     <!-- Edit Form -->
-    <div class="modal-overlay" id="editModal">
-        <div class="modal">
+    <div class="form-overlay" id="editForm">
+        <div class="form">
             <h3><i class="fa-solid fa-pen"></i> Edit Internship Record</h3>
             <form method="POST">
-                <input type="hidden" name="action"    id="modal_action"    value="edit">
-                <input type="hidden" name="intern_id" id="modal_intern_id">
+                <input type="hidden" name="action"    id="form_action"    value="edit">
+                <input type="hidden" name="intern_id" id="form_intern_id">
 
-                <label for="modal_company">Company</label>
-                <input type="text" name="company" id="modal_company" required>
+                <label for="form_company">Company</label>
+                <input type="text" name="company" id="form_company" required>
 
-                <label for="modal_start_date">Start Date</label>
-                <input type="date" name="start_date" id="modal_start_date" required>
+                <label for="form_start_date">Start Date</label>
+                <input type="date" name="start_date" id="form_start_date" required>
 
-                <label for="modal_end_date">End Date</label>
-                <input type="date" name="end_date" id="modal_end_date" required>
+                <label for="form_end_date">End Date</label>
+                <input type="date" name="end_date" id="form_end_date" required>
 
-                <label for="modal_report_status">Status</label>
-                <select name="report_status" id="modal_report_status">
+                <label for="form_report_status">Status</label>
+                <select name="report_status" id="form_report_status">
                     <option value="Drafting">Drafting</option>
                     <option value="In Progress">In Progress</option>
                     <option value="Suspended">Suspended</option>
@@ -336,8 +336,8 @@ foreach ($rows as $row) {
                     <option value="Complete">Complete</option>
                 </select>
 
-                <div class="modal-actions">
-                    <button type="button" class="btn-cancel" onclick="closeEditModal()">Cancel</button>
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="closeEditForm()">Cancel</button>
                     <button type="submit" class="btn-save"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                 </div>
             </form>
