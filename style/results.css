@@ -33,7 +33,7 @@ header{                             /* nav bar flex box stuff */
     top: 0;
     left: 0;
     z-index: 10000;
-    background-color: #10263B;
+    background-color: #10263b;
     box-shadow: 0 0.1rem 0.3rem black;
     overflow: auto;
     color: white;
@@ -161,6 +161,39 @@ a{                                   /* removing any decoration such as colors o
     padding-top: 0.3rem;
 }
 
+.status-badge{
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    padding: .2rem .6rem;
+    border-radius: 999px;
+    font-size: .72rem;
+    font-weight: bolder;
+}
+.status-complete{
+    background: #dcfce7;
+    color: #15803d;
+}
+.status-inprogress{
+    background: #fef9c3;
+    color: #854d0e;
+}
+.status-drafting{
+    background: #dbeafe;
+    color: #1e40af;
+}
+.status-suspended{
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.status-finalisation{
+    background: #ede9fe;
+    color: #5b21b6;
+}
+
+
+
 .mainDash {
     display: flex;
     justify-content: space-between;  
@@ -178,7 +211,7 @@ main {
 }
 
 
-.totalStudents, .totalAssessors, .pending, .result, .marks_submitted{
+.totalStudents, .totalAssessors, .pending, .result, .marks_submitted, .TotalLecturers, .TotalSupervisors{
     flex: 1;                        
     min-width: 12rem;                
     background-color: white;
@@ -201,7 +234,7 @@ main {
 }
 
     
-.totalStudents:hover, .marks_submitted:hover, .pending:hover, .result:hover, .totalAssessors:hover{
+.totalStudents:hover, .marks_submitted:hover, .pending:hover, .result:hover, .totalAssessors:hover, .TotalLecturers:hover, .TotalSupervisors:hover{
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
@@ -213,7 +246,7 @@ main {
     justify-content: center;  /*align in the middle with other boxes */
     align-items: flex-start ;
     flex-direction: row;
-    margin: 2rem 3rem;            /* moved margin so the format is clear */
+    margin: 1rem 3rem;            /* moved margin so the format is clear */
     gap: 2rem;
 }
 
@@ -226,38 +259,41 @@ main {
 
 .sideBar {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    flex-direction: row;
     background-color: white;
-    border: 1px solid #e0e0e0;
+    padding: 1rem;
+    gap: 1rem;
     border-radius: 0.8rem;
-    padding: 1.2rem;
     width: auto;
     min-width: 2rem;
     align-self: flex-start;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    align-items: center;
+    
 }
 
-.sideBar h3 {
+/* .sideBar h3 {
     font-size: 0.95rem;
     font-weight: bold;
     color: #10263B;
     margin-bottom: 0.2rem;
-}
+} */
 
 .sideBar .quickActionGrid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.6rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    height: 100%;
 }
+
+
 
 .sideBar .quickActionGrid a {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 0.4rem;
-    background-color: #f4f6f8;
+    background-color: #f9f8f5;
     border: 1px solid #d0d7de;
     border-radius: 0.5rem;
     padding: 0.8rem 0.5rem;
@@ -301,6 +337,184 @@ table th, table td {
 table tr:last-child td {
     border-bottom: none;          /* remove the last row's bottom line */
 }
+
+/* ========================================================================= */
+                                /* Manage_student */
+/* ============================================================================ */
+
+
+.SearchbarDash{
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    text-align: center;
+    flex-direction: row;
+    gap: 2rem;
+    margin: 2rem 3.2rem 0rem 3.2rem;
+}
+
+.Searchbar{
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    text-align: center;
+    flex-direction: row;
+    gap: 2rem;
+    margin: 2rem 3.2rem 0rem 3.2rem;
+}
+
+
+
+
+.btn-add {
+    background: #10263B;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1.125rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.btn-add:hover {
+    background: #214e78;
+}
+
+
+
+.btn-edit, .btn-delete {
+    border: none;
+    padding: 0.4rem 1rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.delete-button {
+    display: inline;
+}
+
+.btn-edit {
+    background: #ffffff;
+    color: #000000;
+    margin-right: 0.2rem;
+    border: #000000 solid 1px;
+}
+.btn-edit:hover {
+    background: #a4a5a7;
+}
+
+
+.btn-delete {
+    background: #B91C2E;
+    color: #fff;
+}
+.btn-delete:hover {
+    background: #ef2038;
+}
+
+
+.form-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-overlay.active {
+    display: flex;
+}
+
+.form {
+    background: #fff;
+    border-radius: 0.6rem;
+    padding: 2rem;
+    max-width: 90%;
+    max-height: 90%;  
+    overflow-y: auto;
+    width: 37rem;
+    box-shadow: 0 0.5rem 2rem rgba(0,0,0,0.2);
+    height: auto;
+}
+
+.form h3 {
+    margin-top: 0;
+}
+#addStudentIcon{
+    margin-bottom: 0.3rem;
+}
+
+.form label {
+    display: block;
+    margin: 0.625rem 0 0.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.form input, .form select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 0.0625rem solid #ccc;
+    border-radius: 0.375rem;
+    box-sizing: border-box;
+}
+
+.form-actions {
+    margin-top: 1.25rem;
+    display: flex;
+    gap: 0.625rem;
+    justify-content: flex-end;
+}
+
+.btn-save {
+    background: #2e7d32;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1.125rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    background: #888;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1.125rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+}
+
+.search{
+    /* margin: 1.5rem 1rem 0 3rem;  */
+    width: 20rem;
+    height: 2rem;
+    border-radius: 1rem;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    text-align: left;
+    padding-left: 1.5rem;
+    font-size: 1rem;
+}
+
+.statusSearch{
+    width: 10rem;
+    height: 2rem;
+    border-radius: 1rem;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    text-align: left;
+    padding-left: 1.5rem;
+    font-size: 1rem;
+}
+
+
+
+
+
+
+
 
 /* ========================================================================= */
                                 /* Result css */
