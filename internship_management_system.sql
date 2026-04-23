@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 22, 2026 at 05:27 PM
+-- Generation Time: Apr 23, 2026 at 05:17 PM
 -- Server version: 5.7.24
 -- PHP Version: 8.3.1
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `internship_management_system`
+-- Database: `internship management system`
 --
 
 -- --------------------------------------------------------
@@ -42,7 +42,9 @@ CREATE TABLE `assessor` (
 
 INSERT INTO `assessor` (`user_id`, `full_name`, `phone_number`, `email_address`, `organisation`, `assessor_type`) VALUES
 (2, 'John Lecturer', '60388430263', 'johnLecturer@gmail.com', 'Nottingham', 'Lecturer'),
-(3, 'John Supervisor', '60320988768', 'johnSupervisor@gmail.com', 'Google', 'Supervisor');
+(3, 'John Supervisor', '60320988768', 'johnSupervisor@gmail.com', 'Google', 'Supervisor'),
+(9, 'Adam Conover', '60384347632', 'adamConover@gmail.com', 'Dropout', 'Supervisor'),
+(10, 'Steve Jannesson', '60123347672', 'steveJannesson@gmail.com', 'Nottingham', 'Lecturer');
 
 -- --------------------------------------------------------
 
@@ -141,7 +143,11 @@ CREATE TABLE `user_login` (
 INSERT INTO `user_login` (`user_id`, `username`, `password`, `system_role`) VALUES
 (1, 'root', 'root', 'Admin'),
 (2, 'lecturer', 'lecturer', 'Assessor'),
-(3, 'supervisor', 'supervisor', 'Assessor');
+(3, 'supervisor', 'supervisor', 'Assessor'),
+(9, 'adam104', 'password1234', 'Assessor'),
+(10, 'steveMario', 'terraria', 'Assessor'),
+(11, 'Micheal', 'HATESTUDENTS34', 'Admin'),
+(12, 'JayaAwesome', 'LoveMyStudents', 'Assessor');
 
 --
 -- Indexes for dumped tables
@@ -193,7 +199,7 @@ ALTER TABLE `user_login`
 -- AUTO_INCREMENT for table `internship`
 --
 ALTER TABLE `internship`
-  MODIFY `intern_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `intern_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `internship_report`
@@ -205,13 +211,13 @@ ALTER TABLE `internship_report`
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `user_login`
 --
 ALTER TABLE `user_login`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables

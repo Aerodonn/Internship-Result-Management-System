@@ -77,3 +77,21 @@ INSERT INTO internship VALUES
 INSERT INTO internship_report VALUES
 (NULL, 1, 2, 80, 80, 80, 80, 80, 80, 80, 80, "Lecturer - Decent guy"),
 (NULL, 1, 3, 100, 100, 100, 100, 100, 100, 100, 100, "Supervisor - Good employee");
+
+
+ALTER TABLE internship_report
+ADD total_marks DECIMAL(5,2) AS (
+        (task_score) + (safety_score) + (theory_score) + 
+        (pres_score) + (clarity_score) + (learning_score) + 
+        (proj_mgmt_score) + (time_mgmt_score)
+    ) VIRTUAL;
+	
+	
+INSERT INTO user_login VALUES 
+(NULL, "JayaAwesome", "LoveMyStudents", "Assessor");
+(NULL, "adam104", "password1234", "Assessor"),
+(NULL, "steveMario", "terraria", "Supervisor");
+
+INSERT INTO assessor VALUES 
+(9, "Adam Conover", "ruinsEverything", "60384347632", "adamConover@gmail.com", "Dropout", "Supervisor"),
+(10, "steveMario", "SuperMarioGalaxy", "60123347672", "steveJannesson@gmail.com", "Nottingham", "Lecturer");
