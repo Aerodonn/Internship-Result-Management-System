@@ -87,7 +87,7 @@ ADD total_marks DECIMAL(5,2) AS (
     ) VIRTUAL;
 	
 	
-INSERT INTO user_login VALUES 
+	
 (NULL, "JayaAwesome", "LoveMyStudents", "Assessor");
 (NULL, "adam104", "password1234", "Assessor"),
 (NULL, "steveMario", "terraria", "Supervisor");
@@ -95,4 +95,74 @@ INSERT INTO user_login VALUES
 INSERT INTO assessor VALUES 
 (9, "Adam Conover", "60384347632", "adamConover@gmail.com", "Dropout", "Supervisor"),
 (10, "steveMario", "60123347672", "steveJannesson@gmail.com", "Nottingham", "Lecturer");
-(12, "Jaya Kumar", "60324592304", "
+(12, "Jaya Kumar", "60324592304", "jayaKumar@hotmail.com", "Nottingham", "Lecturer");
+
+INSERT INTO student (
+    student_id, 
+    student_reg_number, 
+    student_name, 
+    email_address, 
+    programme, 
+    enrollment_date, 
+    account_status
+) VALUES
+-- 6 Active Students
+(NULL, '20708502', 'Alice Tan', 'alice.tan@example.com', 'Computer Science', '2025-09-01', 'Active'),
+(NULL, '20708503', 'Mohammad Razak', 'm.razak@example.com', 'Biotech', '2025-09-01', 'Active'),
+(NULL, '20708504', 'Siti Aminah', 'siti.a@example.com', 'Education', '2026-01-15', 'Active'),
+(NULL, '20708505', 'Kevin Wong', 'kwong99@example.com', 'Business', '2025-09-01', 'Active'),
+(NULL, '20708506', 'Priya Devi', 'p.devi@example.com', 'Computer Science', '2026-01-15', 'Active'),
+(NULL, '20708507', 'Marcus Lim', 'marcus.l@example.com', 'Creative Writing', '2025-09-01', 'Active'),
+
+-- 1 Graduated Student
+(NULL, '19807422', 'Sarah Jenkins', 's.jenkins@alumni.com', 'Software Engineering', '2022-09-01', 'Graduated'),
+
+-- 1 On-leave Student
+(NULL, '20609910', 'Zulfikar Ali', 'zali@example.com', 'Information Technology', '2024-09-01', 'On-leave'),
+
+-- 1 Suspended Student
+(NULL, '20709001', 'Bad Luck Brian', 'blb@example.com', 'Mechanical Engineering', '2025-09-01', 'Suspended');
+
+INSERT INTO internship VALUES
+(NULL, 3, 2, 3, "Google", "2026-04-22", "2027-04-22", "In Progress"),
+(NULL, 9, 10, 7, "Dropout", "2026-02-22", "2026-04-30", "Finalisation"),
+(NULL, 13, 12, 4, "Meta", "2026-04-27", "2027-04-22", "Drafting"),
+(NULL, 3, 2, 5, "Google", "2023-07-13", "2023-10-18", "Complete"),
+(NULL, 9, 12, 6, "Dropout", "2026-04-22", "2027-04-22", "In Progress"),
+(NULL, 3, 10, 2, "Google", "2026-04-22", "2027-04-22", "In Progress"),
+(NULL, 13, 10, 2, "Meta", "2025-04-22", "2026-03-22", "Complete"),
+(NULL, 3, 12, 2, "Google", "2026-01-22", "2026-02-21", "Complete"),
+(NULL, 9, 12, 10, "Dropout", "2026-02-22", "2026-04-30", "Suspended");
+
+INSERT INTO internship_report (
+    report_id, 
+    intern_id, 
+    assessor_id, 
+    task_score, 
+    safety_score, 
+    theory_score, 
+    present_score, 
+    clarity_score, 
+    learning_score, 
+    proj_mgmt_score, 
+    time_mgmt_score, 
+    comment
+) VALUES
+(NULL, 2, 2, 85, 78, 92, 88, 80, 75, 84, 90, 'Excellent technical skills shown.'),
+(NULL, 2, 3, 80, 82, 85, 75, 78, 80, 82, 85, 'Reliable and proactive team player.'),
+(NULL, 3, 9, 65, 70, 68, 72, 60, 75, 68, 70, 'Needs improvement in documentation.'),
+(NULL, 3, 10, 70, 68, 75, 65, 70, 68, 72, 65, 'Satisfactory performance overall.'),
+(NULL, 4, 12, 95, 90, 88, 92, 95, 85, 90, 92, 'Outstanding project management skills.'),
+(NULL, 4, 13, 90, 88, 85, 90, 88, 92, 85, 90, 'Very professional conduct.'),
+(NULL, 5, 2, 78, 85, 80, 72, 85, 78, 80, 82, 'Good understanding of safety rules.'),
+(NULL, 5, 3, 82, 80, 78, 85, 80, 82, 78, 80, 'Met all core objectives.'),
+(NULL, 6, 9, 88, 92, 85, 80, 88, 90, 85, 82, 'Strong theoretical knowledge application.'),
+(NULL, 6, 12, 85, 88, 82, 85, 90, 88, 82, 85, 'Consistent and hardworking.'),
+(NULL, 7, 3, 60, 65, 70, 62, 65, 68, 60, 72, 'Struggled with time management.'),
+(NULL, 7, 10, 65, 62, 68, 70, 62, 65, 68, 60, 'Basic requirements fulfilled.'),
+(NULL, 8, 10, 72, 75, 78, 80, 72, 75, 78, 80, 'Solid presentation of results.'),
+(NULL, 8, 13, 75, 78, 80, 72, 75, 78, 80, 72, 'Great attitude toward learning.'),
+(NULL, 9, 3, 92, 95, 90, 88, 92, 95, 90, 88, 'Top tier coding ability.'),
+(NULL, 9, 12, 90, 92, 95, 90, 88, 92, 95, 90, 'Exceptional attention to detail.'),
+(NULL, 10, 3, 84, 80, 82, 85, 88, 82, 85, 80, 'Effective communicator.'),
+(NULL, 10, 12, 0, 0, 0, 0, 0, 0, 0, 0, 'Guy burned the company building down');
