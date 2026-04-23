@@ -24,15 +24,15 @@ $sql = "
     JOIN student  s  ON i.student_id  = s.student_id
     JOIN assessor a1 ON i.lecturer_id = a1.user_id
     JOIN assessor a2 ON i.supervisor_id = a2.user_id
-    WHERE i.lecturer_id = ?
     ORDER BY s.student_name ASC
 ";
 
-$result = executePreparedStatement($sql, [$lecturerID]);
+$result = executePreparedStatement($sql, []);
 
 $totalStudents = $result->num_rows;
-$pending       = 0;
-$resultDone    = 0;
+$pending = 0;
+$resultDone = 0;
+$totalAssessor = 0;
 
 $rows = $result->fetch_all(MYSQLI_ASSOC);
 
@@ -43,6 +43,15 @@ foreach ($rows as $row) {
         $pending++;
     }
 }
+$assessors = [];
+
+foreach ($rows as $row) {
+    $assessors[$row['lecturer_id']] = true;
+    $assessors[$row['supervisor_id']] = true;
+}
+
+$totalAssessor = count($assessors);
+
 ?>
 
 <!DOCTYPE html>
@@ -81,7 +90,7 @@ foreach ($rows as $row) {
         <section>
             <article class="Dashboard_msg">
                 <h1>Dashboard</h1>
-                <p>Welcome back Mr Potato</p>
+                <p>Welcome back Mr <span><?php echo htmlspecialchars($_SESSION['Username'] ?? 'admin'); ?></span></p>
             </article>
             <article class="mainDash">
                 <div class="totalStudents">
@@ -90,7 +99,7 @@ foreach ($rows as $row) {
                     </span>
                     <span>
                         <h2><?php echo $totalStudents; ?></h2>
-                        <p>Students assigned</p>
+                        <p>Total Students</p>
                     </span>
                 </div>
                 <div class="totalAssessors">
@@ -98,7 +107,7 @@ foreach ($rows as $row) {
                         <i class="fa-solid fa-user-tie"></i>
                     </span>
                     <span>
-                        <h2><?php echo $TotalAssessors; ?></h2>
+                        <h2><?php echo $totalAssessor; ?></h2>
                         <p>Total Assessors</p>
                     </span>
                 </div>
@@ -122,6 +131,19 @@ foreach ($rows as $row) {
                 </div>
             </article>
         </section>
+        <section class="Searchbar">
+            <div>
+                <input type="search" class="search" placeholder="🔍 Search students…" id="searchStudent">
+                <select class="statusSearch" id="statusFilter">
+                    <option value>All Status</option>
+                    <option value="Drafting">Drafting</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Suspended">Suspended</option>
+                    <option value="Finalisation">Finalisation</option>
+                    <option value="Complete">Complete</option>
+                </select>
+            </div>
+        </section>
         <section class="data">
             <article class="realData">
                 <table>
@@ -138,7 +160,7 @@ foreach ($rows as $row) {
                     <tbody>
                         <?php if (empty($rows)): ?>
                             <tr>
-                                <td colspan="7" style="text-align:center;">No students assigned to you yet.</td>
+                                <td colspan="6" style="text-align:center;">No students assigned to you yet.</td>
                             </tr>
                         <?php else: ?>
                             <?php foreach ($rows as $row): ?>
@@ -147,7 +169,7 @@ foreach ($rows as $row) {
                                     <td><?php echo htmlspecialchars($row['student_name']); ?></td>
                                     <td><?php echo htmlspecialchars($row['lecturer_name']); ?></td>
                                     <td><?php echo htmlspecialchars($row['supervisor_name']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['report_status']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['company']); ?></td>
                                     <td>
                                         <?php
                                         $statusClass = match($row['report_status']) {
@@ -187,6 +209,8 @@ foreach ($rows as $row) {
             <p>© 2026 University of Nottingham Malaysia — Internship Result Management System — Group 39</p>
         </section>
     </footer>
-    
+<script src="SearchBarDashboard.js"></script>
 </body>
-</html>
+</html> 
+
+

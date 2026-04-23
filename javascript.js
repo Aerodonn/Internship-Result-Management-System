@@ -16,43 +16,43 @@ function filterTable() {
     });
 }
 
-function openEditModal(intern_id, company, start_date, end_date, report_status) {
-        document.getElementById('modal_intern_id').value       = intern_id;
-        document.getElementById('modal_company').value         = company;
-        document.getElementById('modal_start_date').value      = start_date;
-        document.getElementById('modal_end_date').value        = end_date;
-        document.getElementById('modal_report_status').value   = report_status;
-        document.getElementById('editModal').classList.add('active');
+function openEditForm(intern_id, company, start_date, end_date, report_status) {
+        document.getElementById('form_intern_id').value       = intern_id;
+        document.getElementById('form_company').value         = company;
+        document.getElementById('form_start_date').value      = start_date;
+        document.getElementById('form_end_date').value        = end_date;
+        document.getElementById('form_report_status').value   = report_status;
+        document.getElementById('editForm').classList.add('active');
     }
 
-function closeEditModal() {
-        document.getElementById('editModal').classList.remove('active');
+function closeEditForm() {
+        document.getElementById('editForm').classList.remove('active');
 }
 
-document.getElementById('editModal').addEventListener('click', function(e) {
-        if (e.target === this) closeEditModal();
+document.getElementById('editForm').addEventListener('click', function(e) {
+        if (e.target === this) closeEditForm();
 });
 
-function openAddModal() {
-    document.getElementById('addModal').classList.add('active');
+function openAddForm() {
+    document.getElementById('addForm').classList.add('active');
 }
 
-function closeAddModal() {
-    const modal    = document.getElementById('addModal');
-    const modalBox = modal.querySelector('.modal');
+function closeAddForm() {
+    const form    = document.getElementById('addForm');
+    const formBox = form.querySelector('.form');
 
-    modal.style.animation    = 'fadeInOverlay 0.25s ease reverse forwards';
-    modalBox.style.animation = 'slideUpModal 0.25s ease reverse forwards';
+    form.style.animation    = 'fadeInOverlay 0.25s ease reverse forwards';
+    formBox.style.animation = 'slideUpForm 0.25s ease reverse forwards';
 
     setTimeout(() => {
-        modal.classList.remove('active');
-        modal.style.animation    = '';
-        modalBox.style.animation = '';
+        form.classList.remove('active');
+        form.style.animation    = '';
+        formBox.style.animation = '';
     }, 250);
 }
 
-document.getElementById('addModal').addEventListener('click', function(e) {
-    if (e.target === this) closeAddModal();
+document.getElementById('addForm').addEventListener('click', function(e) {
+    if (e.target === this) closeAddForm();
 });
 
 
