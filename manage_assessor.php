@@ -232,22 +232,22 @@ foreach ($rows as $row) {
                 <input type="hidden" name="action" value="add">
 
                 <label for="add_username">Username</label>
-                <input type="text" name="username" id="add_username" required>
+                <input type="text" name="username" id="add_username" maxlength="15" required>
 
                 <label for="add_password">Password</label>
-                <input type="password" name="password" id="add_password" required>
+                <input type="password" name="password" id="add_password" maxlength="15" required>
 
                 <label for="add_full_name">Assessor Name</label>
-                <input type="text" name="full_name" id="add_full_name" required>
+                <input type="text" name="full_name" id="add_full_name" maxlength="70" required>
 
                 <label for="add_phone_number">Phone Number</label>
-                <input type="text" name="phone_number" id="add_phone_number" required>
+                <input type="text" name="phone_number" id="add_phone_number" maxlength="15" required>
 
                 <label for="add_email_address">Email</label>
-                <input type="email" name="email_address" id="add_email_address" required>
+                <input type="email" name="email_address" id="add_email_address" maxlength="255" required>
 
                 <label for="add_organisation">Organisation</label>
-                <input type="text" name="organisation" id="add_organisation" required>
+                <input type="text" name="organisation" id="add_organisation" maxlength="70" required>
 
                 <label for="add_assessor_type">Assessor Type</label>
                 <select name="assessor_type" id="add_assessor_type">
@@ -272,16 +272,16 @@ foreach ($rows as $row) {
                 <input type="hidden" name="user_id"  id="form_user_id">
 
                 <label for="form_full_name">Full Name</label>
-                <input type="text" name="full_name" id="form_full_name" required>
+                <input type="text" name="full_name" id="form_full_name" maxlength="70" required>
 
                 <label for="form_phone_number">Phone Number</label>
-                <input type="text" name="phone_number" id="form_phone_number" required>
+                <input type="text" name="phone_number" id="form_phone_number" maxlength="15" required>
 
                 <label for="form_email_address">Email</label>
-                <input type="email" name="email_address" id="form_email_address" required>
+                <input type="email" name="email_address" id="form_email_address" maxlength="255" required>
 
                 <label for="form_organisation">Organisation</label>
-                <input type="text" name="organisation" id="form_organisation" required>
+                <input type="text" name="organisation" id="form_organisation" maxlength="70" required>
 
                 <label for="form_assessor_type">Assessor Type</label>
                 <select name="assessor_type" id="form_assessor_type">
