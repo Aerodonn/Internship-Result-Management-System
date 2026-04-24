@@ -1,4 +1,5 @@
 <?php
+echo "dont run this";
 session_start();
 ?>
 
