@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,18 +26,19 @@
 
     <nav class="headul">
         <ul>
-            <li class="list"><a href="#"><i class="fa-solid fa-house"></i> Dashboard</a></li>
-            <li class="list"><a href="#"><i class="fa-solid fa-chalkboard-user"></i> Assessor</a></li>
-            <li class="list"><a href="#"><i class="fa-solid fa-chart-bar"></i> Result</a></li>
+            <li class="list"><a href="dashboard.php"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+            <li class="list"><a href="myStudents.php"><i class="fa-solid fa-chalkboard-user"></i> Assessor</a></li>
+            <li class="list"><a href="results.php"><i class="fa-solid fa-chart-bar"></i> Result</a></li>
         </ul>
     </nav>
 
     <section class="navbar_loginUser">
         <article>
-            <p>Username</p>
-            <p>Admin</p>
+            <!-- PHP dynamic user (fallback if no session) -->
+            <p><?php echo $_SESSION['Username'] ?? 'Username'; ?></p>
+            <p><?php echo $_SESSION['SystemRole'] ?? 'Admin'; ?></p>
         </article>
-        <a href="#">Logout</a>
+        <a href="logout.php">Logout</a>
     </section>
 </header>
 
@@ -79,7 +84,7 @@
 
                 <tbody>
 
-                    <!-- SAMPLE ROWS (frontend only) -->
+                    <!-- SAMPLE DATA (frontend only) -->
                     <tr>
                         <td>1001</td>
                         <td>Ali</td>
@@ -124,7 +129,7 @@
 
 </main>
 
-
+<!-- FOOTER -->
 <footer>
     <section class="footer">
         <p>© 2026 University of Nottingham Malaysia — Internship System</p>
