@@ -150,7 +150,7 @@ $totalAssessor = $assessor_row['total_count'];
                 <div class="quickActionGrid">
                     <a href="manage_student.php"><i class="fa-solid fa-user-graduate"></i> Manage Students</a>
                     <a href="manage_assessor.php"><i class="fa-solid fa-user-tie"></i></i>Manage Assessor</a>
-                    <a href="#"><i class="fa-solid fa-user-shield"></i> Assign Internship</a>
+                    <a href="assign_internship.php"><i class="fa-solid fa-user-shield"></i> Assign Internship</a>
                 </div>
             </article>
             </div>

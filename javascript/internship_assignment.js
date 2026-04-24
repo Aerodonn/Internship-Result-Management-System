@@ -16,14 +16,14 @@ function filterTable() {
 }
 
 
-function openEditForm(student_id, reg_number, name, email, programme, enrollment_date, account_status) {
-    document.getElementById('form_student_id').value = student_id;
-    document.getElementById('form_reg_number').value = reg_number;
-    document.getElementById('form_student_name').value = name;
-    document.getElementById('form_email').value = email;
-    document.getElementById('form_programme').value = programme;
-    document.getElementById('form_enrollment_date').value = enrollment_date;
-    document.getElementById('form_account_status').value = account_status;
+function openEditForm(lecturer_id, supervisor_id, company, start_date, end_date, report_status, intern_id) {
+    document.getElementById('form_lecturer_id').value  = lecturer_id;
+    document.getElementById('form_supervisor_id').value = supervisor_id;
+    document.getElementById('form_company').value = company;
+    document.getElementById('form_start_date').value = start_date;
+    document.getElementById('form_end_date').value = end_date;
+    document.getElementById('form_report_status').value = report_status;
+    document.getElementById('form_intern_id').value = intern_id;
     document.getElementById('editForm').classList.add('active');
 }
 
@@ -59,3 +59,4 @@ document.getElementById('addForm').addEventListener('click', function(e) {
 
 document.getElementById('searchStudent').addEventListener('input', filterTable);
 document.getElementById('statusFilter').addEventListener('change', filterTable);
+

@@ -228,80 +228,80 @@ foreach ($rows as $row) {
     
     <!-- Add Student Form -->
     <div class="form-overlay" id="addForm">
-    <div class="form">
-        <h3><i class="fa-solid fa-user-plus" id="addStudentIcon"></i> Add Student</h3>
-        <form method="POST">
-            <input type="hidden" name="action" value="add">
+        <div class="form">
+            <h3><i class="fa-solid fa-user-plus" id="addStudentIcon"></i> Add Student</h3>
+            <form method="POST">
+                <input type="hidden" name="action" value="add">
 
-            <label for="add_student_reg_number">Student Registration Number</label>
-            <input type="text" name="student_reg_number" id="add_student_reg_number" placeholder="e.g. 20708501" maxlength="8" required>
+                <label for="add_student_reg_number">Student Registration Number</label>
+                <input type="text" name="student_reg_number" id="add_student_reg_number" placeholder="e.g. 20708501" maxlength="8" required>
 
-            <label for="add_student_name">Student Name</label>
-            <input type="text" name="student_name" id="add_student_name" maxlength="70" required>
+                <label for="add_student_name">Student Name</label>
+                <input type="text" name="student_name" id="add_student_name" maxlength="70" required>
 
-            <label for="add_email_address">Student Email</label>
-            <input type="email" name="email_address" id="add_email_address" required>
+                <label for="add_email_address">Student Email</label>
+                <input type="email" name="email_address" id="add_email_address" required>
 
-            <label for="add_programme">Programme</label>
-            <input type="text" name="programme" id="add_programme" maxlength="50" required>
+                <label for="add_programme">Programme</label>
+                <input type="text" name="programme" id="add_programme" maxlength="50" required>
 
-            <label for="add_enrollment_date">Enrollment Date</label>
-            <input type="date" name="enrollment_date" id="add_enrollment_date" required>
+                <label for="add_enrollment_date">Enrollment Date</label>
+                <input type="date" name="enrollment_date" id="add_enrollment_date" required>
 
-            <label for="add_account_status">Account Status</label>
-            <select name="account_status" id="add_account_status">
-                <option value="Active">Active</option>
-                <option value="Graduated">Graduated</option>
-                <option value="On-leave">On-leave</option>
-                <option value="Suspended">Suspended</option>
-            </select>
+                <label for="add_account_status">Account Status</label>
+                <select name="account_status" id="add_account_status">
+                    <option value="Active">Active</option>
+                    <option value="Graduated">Graduated</option>
+                    <option value="On-leave">On-leave</option>
+                    <option value="Suspended">Suspended</option>
+                </select>
 
-            <div class="form-actions">
-                <button type="button" class="btn-cancel" onclick="closeAddForm()">Cancel</button>
-                <button type="submit" class="btn-save"><i class="fa-solid fa-floppy-disk"></i> Save Student</button>
-            </div>
-        </form>
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="closeAddForm()">Cancel</button>
+                    <button type="submit" class="btn-save"><i class="fa-solid fa-floppy-disk"></i> Save Student</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
     <!-- Edit Form -->
     <div class="form-overlay" id="editForm">
-    <div class="form">
-        <h3><i class="fa-solid fa-pen"></i> Edit Student Profile</h3>
-        <form method="POST">
-            <input type="hidden" name="action" value="edit">
-            <input type="hidden" name="student_id" id="form_student_id">
+        <div class="form">
+            <h3><i class="fa-solid fa-pen"></i> Edit Student Profile</h3>
+            <form method="POST">
+                <input type="hidden" name="action" value="edit">
+                <input type="hidden" name="student_id" id="form_student_id">
 
-            <label for="form_reg_number">Registration Number</label>
-            <input type="text" name="student_reg_number" id="form_reg_number" required>
+                <label for="form_reg_number">Registration Number</label>
+                <input type="text" name="student_reg_number" id="form_reg_number" required>
 
-            <label for="form_student_name">Full Name</label>
-            <input type="text" name="student_name" id="form_student_name" required>
+                <label for="form_student_name">Full Name</label>
+                <input type="text" name="student_name" id="form_student_name" required>
 
-            <label for="form_email">Email Address</label>
-            <input type="email" name="email_address" id="form_email" required>
+                <label for="form_email">Email Address</label>
+                <input type="email" name="email_address" id="form_email" required>
 
-            <label for="form_programme">Programme</label>
-            <input type="text" name="programme" id="form_programme" required>
+                <label for="form_programme">Programme</label>
+                <input type="text" name="programme" id="form_programme" required>
 
-            <label for="form_enrollment_date">Enrollment Date</label>
-            <input type="date" name="enrollment_date" id="form_enrollment_date" required>
+                <label for="form_enrollment_date">Enrollment Date</label>
+                <input type="date" name="enrollment_date" id="form_enrollment_date" required>
 
-            <label for="form_account_status">Account Status</label>
-            <select name="account_status" id="form_account_status">
-                <option value="Active">Active</option>
-                <option value="Graduated">Graduated</option>
-                <option value="On-leave">On-leave</option>
-                <option value="Suspended">Suspended</option>
-            </select>
+                <label for="form_account_status">Account Status</label>
+                <select name="account_status" id="form_account_status">
+                    <option value="Active">Active</option>
+                    <option value="Graduated">Graduated</option>
+                    <option value="On-leave">On-leave</option>
+                    <option value="Suspended">Suspended</option>
+                </select>
 
-            <div class="form-actions">
-                <button type="button" class="btn-cancel" onclick="closeEditForm()">Cancel</button>
-                <button type="submit" class="btn-save"><i class="fa-solid fa-floppy-disk"></i> Update Profile</button>
-            </div>
-        </form>
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="closeEditForm()">Cancel</button>
+                    <button type="submit" class="btn-save"><i class="fa-solid fa-floppy-disk"></i> Update Profile</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
     <footer>
         <section class="footer">
