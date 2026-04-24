@@ -622,14 +622,6 @@ table tr:last-child td {
     margin-top: 0.4rem; /* Adds a small gap between the Edit and Delete buttons */
 }
 
-
-#add_supervisor_id{
-    overflow-y: auto;
-    max-height: 1rem; 
-}
-
-
-
 /* ========================================================================= */
                                 /* Result css */
 /* ============================================================================ */

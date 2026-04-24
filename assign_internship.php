@@ -267,7 +267,7 @@ $supervisors = $supervisors_result->fetch_all(MYSQLI_ASSOC);
                 <input type="hidden" name="action"    value="edit">
                 <input type="hidden" name="intern_id" id="form_intern_id">
 
-                <label for="form_supervisor_id">Supervisor ID</label>
+                <label for="form_lecturer_id">Lecturer</label>
                 <select name="lecturer_id" id="form_lecturer_id" required>
                     <option value="">Select Lecturer</option>
                     <?php foreach ($lecturers as $lecturer): ?>
@@ -277,7 +277,7 @@ $supervisors = $supervisors_result->fetch_all(MYSQLI_ASSOC);
                     <?php endforeach; ?>
                 </select>
 
-                <label for="add_supervisor_id">Supervisor</label>
+                <label for="form_supervisor_id">Supervisor</label>
                 <select name="supervisor_id" id="form_supervisor_id" required>
                     <option value="">Select Supervisor</option>
                     <?php foreach ($supervisors as $supervisor): ?>
