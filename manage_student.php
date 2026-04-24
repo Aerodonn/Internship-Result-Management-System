@@ -64,15 +64,21 @@ $sql = "
     ORDER BY student_id ASC
 ";
 
-$result = executePreparedStatement($sql, []);
+$report_status = "
+    SELECT report_status
+    FROM internship";
+
+$result = executePreparedStatement($sql, []);   
+$report_result = executePreparedStatement($report_status, []);   
 
 $totalStudents = $result->num_rows;
 $marksSubmitted = 0;
 $pending = 0;
 
 $rows = $result->fetch_all(MYSQLI_ASSOC);
+$report_rows = $report_result->fetch_all(MYSQLI_ASSOC);
 //looping through the report_status column to find "Complete" so we can perform totaling on pending and resultDone variables
-foreach ($rows as $row) {
+foreach ($report_rows as $row) {
     if ($row['report_status'] === 'Complete') {
         $marksSubmitted++;
     } else {
