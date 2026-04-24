@@ -264,7 +264,7 @@ $final = [];
         <p>© 2026 University of Nottingham Malaysia — Internship System</p>
     </section>
 </footer>
-<script src="javascript/-.js"></script>
+<script src="javascript/SearchBarDashboard.js"></script></body>
 
 </body>
 </html>

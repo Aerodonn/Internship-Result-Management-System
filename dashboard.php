@@ -211,8 +211,7 @@ $totalAssessor = $assessor_row['total_count'];
             <p>© 2026 University of Nottingham Malaysia — Internship Result Management System — Group 39</p>
         </section>
     </footer>
-<script src="/SearchBarDashboard.js"></script>
-</body>
+<script src="javascript/SearchBarDashboard.js"></script></body>
 </html> 
 
 
