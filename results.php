@@ -2,18 +2,10 @@
 
 session_start();
 
-$host     = "localhost";
-$dbname   = "internship_management_system";
-$username = "root";
-$password = "root";
+include 'connect.php';
+include 'prepared_statements.php';
 
-$conn = new mysqli($host, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-$lecturerID = $_SESSION['UserID'] ?? 2; // fallback to 2 for testing
+$userID = $_SESSION['UserID']; // fallback to 2 for testing
 
 // Fixed: all column names changed to snake_case to match DB schema
 $sql = "
@@ -38,14 +30,10 @@ $sql = "
     JOIN assessor  a1 ON i.lecturer_id   = a1.user_id
     JOIN assessor  a2 ON i.supervisor_id = a2.user_id
     JOIN internship_report Ar ON i.intern_id = Ar.intern_id
-    WHERE i.lecturer_id = ?
+    WHERE i.lecturer_id = ? or i.supervisor_id = ?
     ORDER BY s.student_name ASC
 ";
-
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $lecturerID);
-$stmt->execute();
-$result = $stmt->get_result();
+$result = executePreparedStatement($sql, [$userID,$userID]);
 
 // Calculations for summary cards
 $totalStudents = $result->num_rows;
@@ -68,37 +56,33 @@ $total_AllScore = 0;
 //     'time_mgmt_score' => 15,
 // ];
 //initalizing
-$final = [];
 
-//loop
-foreach ($rows as $row) {
-    $id = $row['intern_id'];
-
-    //if the intern_id is the first time then the intern_id get save in final
-    if (!isset($final[$id])) {
-        $final[$id] = 0;
-    }
-    //adds intern_id's total_scores together
-    $final[$id] += $row['total_score'];
-}
-
-
-
-
-
+$totalStudents = $result->num_rows;
+$marksSubmitted = 0;
+$pending = 0;
 
 $rows = $result->fetch_all(MYSQLI_ASSOC);
-
+//looping through the report_status column to find "Complete" so we can perform totaling on pending and resultDone variables
 foreach ($rows as $row) {
     if ($row['report_status'] === 'Complete') {
-        $resultDone++;
+        $marksSubmitted++;
     } else {
         $pending++;
     }
 }
+$final = [];
 
-$stmt->close();
-$conn->close();
+// //loop
+// foreach ($rows as $row) {
+//     $id = $row['intern_id'];
+
+//     //if the intern_id is the first time then the intern_id get save in final
+//     if (!isset($final[$id])) {
+//         $final[$id] = 0;
+//     }
+//     //adds intern_id's total_scores together
+//     $final[$id] += $row['total_score'];
+// }
 ?>
 
 
