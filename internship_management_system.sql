@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 23, 2026 at 06:54 PM
+-- Generation Time: Apr 24, 2026 at 04:02 PM
 -- Server version: 5.7.24
 -- PHP Version: 8.3.1
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `internship management system`
+-- Database: `internship_management_system`
 --
 
 -- --------------------------------------------------------
@@ -126,7 +126,7 @@ INSERT INTO `internship_report` (`report_id`, `intern_id`, `assessor_id`, `task_
 (20, 8, 13, 75.00, 78.00, 80.00, 72.00, 75.00, 78.00, 80.00, 72.00, 'Great attitude toward learning.'),
 (21, 9, 3, 92.00, 95.00, 90.00, 88.00, 92.00, 95.00, 90.00, 88.00, 'Top tier coding ability.'),
 (22, 9, 12, 90.00, 92.00, 95.00, 90.00, 88.00, 92.00, 95.00, 90.00, 'Exceptional attention to detail.'),
-(23, 10, 3, 84.00, 80.00, 82.00, 85.00, 88.00, 82.00, 85.00, 80.00, 'Effective communicator.'),
+(23, 10, 9, 84.00, 80.00, 82.00, 85.00, 88.00, 82.00, 85.00, 80.00, 'Effective communicator.'),
 (24, 10, 12, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 'Guy burned the company building down');
 
 -- --------------------------------------------------------

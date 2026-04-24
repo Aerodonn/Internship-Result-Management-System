@@ -12,10 +12,9 @@ $sql = "
     SELECT
         s.student_id            AS student_id,
         s.student_name          AS student_name,
-        a1.full_name            AS lecturer_name,
-        a2.full_name            AS supervisor_name,
         i.report_status         AS report_status,
         i.intern_id             AS intern_id,
+        Ar.assessor_id          AS assessor_id,
         Ar.report_id            AS report_id,
         Ar.task_score           AS task_score,
         Ar.safety_score         AS safety_score,
@@ -32,10 +31,10 @@ $sql = "
     JOIN assessor  a1 ON i.lecturer_id   = a1.user_id
     JOIN assessor  a2 ON i.supervisor_id = a2.user_id
     JOIN internship_report Ar ON i.intern_id = Ar.intern_id
-    WHERE i.lecturer_id = ? or i.supervisor_id = ?
+    WHERE assessor_id = ?
     ORDER BY s.student_name ASC
 ";
-$result = executePreparedStatement($sql, [$userID,$userID]);
+$result = executePreparedStatement($sql, [$userID]);
 
 // Calculations for summary cards
 $totalStudents = $result->num_rows;
