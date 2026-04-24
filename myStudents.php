@@ -75,10 +75,10 @@ $sql = "
         i.report_status         AS report_status,
         i.intern_id             AS intern_id
     FROM internship i
-    JOIN student   s  ON i.student_id    = s.student_id
-    JOIN assessor  a1 ON i.lecturer_id   = a1.user_id
-    JOIN assessor  a2 ON i.supervisor_id = a2.user_id
-    WHERE i.lecturer_id = ? OR i.lecturer_id = ?
+    LEFT JOIN student   s  ON i.student_id    = s.student_id
+    LEFT JOIN assessor  a1 ON i.lecturer_id   = a1.user_id
+    LEFT JOIN assessor  a2 ON i.supervisor_id = a2.user_id
+    WHERE i.lecturer_id = ? OR i.supervisor_id = ?
     ORDER BY s.student_name ASC
 ";
 
