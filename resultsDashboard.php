@@ -7,10 +7,12 @@ include 'prepared_statements.php';
 
 $userID = $_SESSION['UserID']; // fallback to 2 for testing
 
-if ($_SESSION['SystemRole'] == 'Admin') {
-    header("Location: resultsDashboard.php");
+if ($_SESSION['SystemRole'] !== 'Admin') {
+    header("Location: login.php");
     exit();
 };
+
+// Fixed: all column names changed to snake_case to match DB schema
 
 $sql = "
     SELECT
@@ -18,8 +20,9 @@ $sql = "
         s.student_name          AS student_name,
         i.intern_id             AS intern_id,
         Ar.assessor_id          AS assessor_id,
-        Ar.report_id            AS report_id,
+        a.full_name             AS assessor_name,
         i.report_status         AS report_status,
+        Ar.report_id            AS report_id,
         Ar.task_score           AS task_score,
         Ar.safety_score         AS safety_score,
         Ar.theory_score         AS theory_score,
@@ -32,17 +35,17 @@ $sql = "
         Ar.total_marks          AS total_marks
     FROM internship_report Ar
     JOIN internship i ON i.intern_id = Ar.intern_id
-    JOIN student   s  ON s.student_id = i.student_id
-    WHERE Ar.assessor_id = ?
+    JOIN student   s  ON s.student_id = i.student_id  
+    JOIN assessor a ON a.user_id = Ar.assessor_id
     ORDER BY s.student_name ASC
-    ";
-$result = executePreparedStatement($sql, [$userID]);
+";
+$result = executePreparedStatement($sql, []);
 
 // Calculations for summary cards
 $totalStudents = $result->num_rows;
 $TotalAssessors = 0;
-$marksSubmitted = 0;
 $pending = 0;
+$marksSubmitted = 0;
 
 $rows = $result->fetch_all(MYSQLI_ASSOC);
 //looping through the report_status column to find "Complete" so we can perform totaling on pending and resultDone variables
@@ -55,17 +58,6 @@ foreach ($rows as $row) {
 }
 $final = [];
 
-// //loop
-// foreach ($rows as $row) {
-//     $id = $row['intern_id'];
-
-//     //if the intern_id is the first time then the intern_id get save in final
-//     if (!isset($final[$id])) {
-//         $final[$id] = 0;
-//     }
-//     //adds intern_id's total_scores together
-//     $final[$id] += $row['total_score'];
-// }
 ?>
 
 
@@ -163,14 +155,8 @@ $final = [];
                         <th>Report ID</th>
                         <th>Intern ID</th>
                         <th>Intern Name</th>
-                        <th>Task</th>
-                        <th>Safety</th>
-                        <th>Theory</th>
-                        <th>Presentation</th>
-                        <th>Clarity</th>
-                        <th>Learning</th>
-                        <th>Project Management</th>
-                        <th>Time Management</th>
+                        <th>Assessor ID</th>
+                        <th>Assessor Name</th>
                         <th>Marks</th>
                         <th>Comments</th>
                         <th>Mark</th>
@@ -187,15 +173,20 @@ $final = [];
                                     <td><?php echo htmlspecialchars($row['report_id']); ?></td>
                                     <td><?php echo htmlspecialchars($row['intern_id']); ?></td>
                                     <td><?php echo htmlspecialchars($row['student_name']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['task_score']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['safety_score']); ?></td>
-                                    
-                                    <td><?php echo htmlspecialchars($row['theory_score']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['present_score']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['clarity_score']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['learning_score']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['proj_mgmt_score']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['time_mgmt_score']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['assessor_id']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['assessor_name']); ?></td>
+                                    <td>
+                                        <?php //this put PHP values into javascript function
+                                        $statusClass = match($row['report_status']) {
+                                            'Complete'     => 'status-complete',
+                                            'In Progress'  => 'status-inprogress',
+                                            'Drafting'     => 'status-drafting',
+                                            'Suspended'    => 'status-suspended',
+                                            'Finalisation' => 'status-finalisation',
+                                            default        => ''
+                                        };
+                                        ?>
+                                    </td>
                                     <td><?php 
                                     $weighted_score =
                                     $row['task_score']*0.1 + $row['safety_score']*0.1 + $row['theory_score']*0.1 + 

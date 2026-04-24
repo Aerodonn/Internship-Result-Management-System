@@ -356,7 +356,7 @@ foreach ($rows as $row) {
         </section>
     </footer>
 
-<script src="javascript/-.js"></script>
+<script src="javascript/SearchBarDashboard.js"></script>
 
 </body>
 </html>
