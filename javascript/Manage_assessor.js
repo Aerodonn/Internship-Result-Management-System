@@ -17,11 +17,11 @@ function filterTable() {
 }
 
 function openEditForm(user_id, full_name, phone_number, email_address, organisation, assessor_type) {
-    document.getElementById('form_user_id').value       = user_id;
-    document.getElementById('form_full_name').value     = full_name;
-    document.getElementById('form_phone_number').value  = phone_number;
+    document.getElementById('form_user_id').value = user_id;
+    document.getElementById('form_full_name').value = full_name;
+    document.getElementById('form_phone_number').value = phone_number;
     document.getElementById('form_email_address').value = email_address;
-    document.getElementById('form_organisation').value  = organisation;
+    document.getElementById('form_organisation').value = organisation;
     document.getElementById('form_assessor_type').value = assessor_type;
     document.getElementById('editForm').classList.add('active');
 }
@@ -42,12 +42,12 @@ function closeAddForm() {
     const form    = document.getElementById('addForm');
     const formBox = form.querySelector('.form');
 
-    form.style.animation    = 'fadeInOverlay 0.25s ease reverse forwards';
+    form.style.animation = 'fadeInOverlay 0.25s ease reverse forwards';
     formBox.style.animation = 'slideUpForm 0.25s ease reverse forwards';
 
     setTimeout(() => {
         form.classList.remove('active');
-        form.style.animation    = '';
+        form.style.animation = '';
         formBox.style.animation = '';
     }, 250);
 }
