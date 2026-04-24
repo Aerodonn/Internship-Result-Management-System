@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Results</title>
+
+    <!-- Your CSS -->
+    <link rel="stylesheet" href="style/results.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<!-- ✅ NAVBAR (reuse from your project) -->
+<header>
+    <section class="navimg_logo">
+        <a href="#"><img src="assets/nottinghamLogoWhite.png"></a>
+    </section>
+
+    <nav class="headul">
+        <ul>
+            <li class="list"><a href="#"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+            <li class="list"><a href="#"><i class="fa-solid fa-chalkboard-user"></i> Assessor</a></li>
+            <li class="list"><a href="#"><i class="fa-solid fa-chart-bar"></i> Result</a></li>
+        </ul>
+    </nav>
+
+    <section class="navbar_loginUser">
+        <article>
+            <p>Username</p>
+            <p>Admin</p>
+        </article>
+        <a href="#">Logout</a>
+    </section>
+</header>
+
+<!-- ✅ MAIN CONTENT -->
+<main>
+
+    <!-- TITLE -->
+    <section class="Dashboard_msg">
+        <h1>View Results</h1>
+        <p>List of student internship results</p>
+    </section>
+
+    <!-- SEARCH BAR -->
+    <section class="SearchbarDash">
+        <input type="search" placeholder="🔍 Search students..." class="search">
+
+        <select class="statusSearch">
+            <option>All Status</option>
+            <option>Complete</option>
+            <option>In Progress</option>
+            <option>Drafting</option>
+        </select>
+    </section>
+
+    <!-- TABLE -->
+    <section class="data">
+        <article class="realData">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Lecturer</th>
+                        <th>Lecturer Score</th>
+                        <th>Supervisor</th>
+                        <th>Supervisor Score</th>
+                        <th>Total</th>
+                        <th>Grade</th>
+                        <th>Comments</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <!-- SAMPLE ROWS (frontend only) -->
+                    <tr>
+                        <td>1001</td>
+                        <td>Ali</td>
+                        <td>Dr Smith</td>
+                        <td>75</td>
+                        <td>Mr Tan</td>
+                        <td>80</td>
+                        <td>155</td>
+                        <td>A</td>
+                        <td>Excellent performance</td>
+                    </tr>
+
+                    <tr>
+                        <td>1002</td>
+                        <td>Siva</td>
+                        <td>Dr Lee</td>
+                        <td>60</td>
+                        <td>Ms Wong</td>
+                        <td>65</td>
+                        <td>125</td>
+                        <td>B</td>
+                        <td>Good effort</td>
+                    </tr>
+
+                    <tr>
+                        <td>1003</td>
+                        <td>John</td>
+                        <td>Dr Lim</td>
+                        <td>45</td>
+                        <td>Mr Kumar</td>
+                        <td>50</td>
+                        <td>95</td>
+                        <td>C</td>
+                        <td>Needs improvement</td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </article>
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <section class="footer">
+        <p>© 2026 University of Nottingham Malaysia — Internship System</p>
+    </section>
+</footer>
+
+</body>
+</html>
