@@ -623,11 +623,6 @@ table tr:last-child td {
 }
 
 
-#add_supervisor_id{
-    overflow-y: auto;
-    max-height: 1rem; 
-}
-
 
 
 /* ========================================================================= */
