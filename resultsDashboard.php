@@ -159,6 +159,7 @@ $final = [];
                         <th>Assessor Name</th>
                         <th>Marks</th>
                         <th>Comments</th>
+                        <th>Status</th>
                         <th>Mark</th>
                     </tr>
                 </thead>
@@ -175,8 +176,16 @@ $final = [];
                                     <td><?php echo htmlspecialchars($row['student_name']); ?></td>
                                     <td><?php echo htmlspecialchars($row['assessor_id']); ?></td>
                                     <td><?php echo htmlspecialchars($row['assessor_name']); ?></td>
-                                    <td>
-                                        <?php //this put PHP values into javascript function
+                                    <td><?php 
+                                    $weighted_score =
+                                    $row['task_score']*0.1 + $row['safety_score']*0.1 + $row['theory_score']*0.1 + 
+                                    $row['present_score']*0.15 + $row['clarity_score']*0.1 + $row['learning_score']*0.15 + 
+                                    $row['proj_mgmt_score']*0.15 + $row['time_mgmt_score']*0.15;
+                                    echo htmlspecialchars(number_format($weighted_score, 2));
+                                    ?></td>
+                                    <td><?php echo htmlspecialchars($row['comment']); ?></td>
+                                    <td> <!-- Changing the class depending on the status so the program CSS changes accordingly -->
+                                        <?php
                                         $statusClass = match($row['report_status']) {
                                             'Complete'     => 'status-complete',
                                             'In Progress'  => 'status-inprogress',
@@ -186,15 +195,10 @@ $final = [];
                                             default        => ''
                                         };
                                         ?>
+                                        <span class="status-badge <?php echo $statusClass; ?>">
+                                            <?php echo htmlspecialchars($row['report_status'] ?? 'N/A'); ?>
+                                        </span>
                                     </td>
-                                    <td><?php 
-                                    $weighted_score =
-                                    $row['task_score']*0.1 + $row['safety_score']*0.1 + $row['theory_score']*0.1 + 
-                                    $row['present_score']*0.15 + $row['clarity_score']*0.1 + $row['learning_score']*0.15 + 
-                                    $row['proj_mgmt_score']*0.15 + $row['time_mgmt_score']*0.15;
-                                    echo htmlspecialchars(number_format($weighted_score, 2));
-                                    ?></td>
-                                    <td><?php echo htmlspecialchars($row['comment']); ?></td>
                                     <td>
                                         <!-- mark button -->
                                         <button class="btn-add" onclick="openAddForm()">
