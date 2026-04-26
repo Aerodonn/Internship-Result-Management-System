@@ -158,13 +158,21 @@ foreach ($report_rows as $row) {
 
         <section class="Searchbar">
             <div>
-                <input type="search" class="search" placeholder="🔍 Search students…" id="searchStudent">
+                <select class="searchBy" id="searchType">
+                    <option value="student">Search by Student ID</option>
+                    <option value="number">Search by Registration</option>
+                    <option value="attributes">Search by Attributes</option>
+                </select>
+
+                <input type="search" class="search" placeholder="🔍 Search..." id="searchStudent">
+                
                 <select class="statusSearch" id="statusFilter">
-                    <option value>All Status</option>
-                    <option value="Active">Active</option>
-                    <option value="Graduated">Graduated</option>
-                    <option value="On-leave">On-leave</option>
+                    <option value="">All Status</option>
+                    <option value="Drafting">Drafting</option>
+                    <option value="In Progress">In Progress</option>
                     <option value="Suspended">Suspended</option>
+                    <option value="Finalisation">Finalisation</option>
+                    <option value="Complete">Complete</option>
                 </select>
             </div>
             <button class="btn-add" onclick="openAddForm()">

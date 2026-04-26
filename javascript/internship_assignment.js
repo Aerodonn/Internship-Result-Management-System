@@ -1,18 +1,37 @@
 function filterTable() {
-    const search = document.getElementById('searchStudent').value.toLowerCase();
-    const status = document.getElementById('statusFilter').value;
+    const search = document.getElementById('searchStudent').value.toLowerCase().trim();
+    const searchType = document.getElementById('searchType').value; 
     const rows = document.querySelectorAll('tbody tr');
 
     rows.forEach(row => {
-        const content = row.textContent.toLowerCase();
-    
-        const rowStatus = row.querySelectorAll('td')[6].textContent.trim();
-        
-        const matchesSearch = content.includes(search);
-        const matchesStatus = status === '' || rowStatus === status;
-        
-        row.style.display = matchesSearch && matchesStatus ? '' : 'none';
+        const cells = row.getElementsByTagName('td');
+        let content = '';
+        let isStrictSearch = true;
+
+        if (searchType === 'intern') {
+            const internID = cells[0]?.textContent.toLowerCase().trim() || "";
+            content =`${internID}`;
+        } else if (searchType === 'student') {
+            const studentID = cells[1]?.textContent.toLowerCase().trim() || "";
+            content =`${studentID}`;
+        } else {
+            content = row.textContent.toLowerCase();
+            isStrictSearch = false;
+        }
+        let matchesSearch = false;
+        if (search === "") {
+            matchesSearch = true; //if search is empty, show everything
+        } else if (isStrictSearch) {
+            matchesSearch = (content === search); // strict match
+        } else {
+            matchesSearch = content.includes(search); // partial match
+        }
+
+
+        row.style.display = matchesSearch ? '' : 'none';
     });
+    
+    console.log("JS file loaded successfully!");
 }
 
 
@@ -53,10 +72,6 @@ function closeAddForm() {
     }, 250);
 }
 
-document.getElementById('addForm').addEventListener('click', function(e) {
-    if (e.target === this) closeAddForm();
-});
-
+document.getElementById('searchType').addEventListener('change', filterTable);
 document.getElementById('searchStudent').addEventListener('input', filterTable);
-document.getElementById('statusFilter').addEventListener('change', filterTable);
 

@@ -541,8 +541,35 @@ table tr:last-child td {
     height: calc(100vh - 10rem);  /*makes the table scroll instead of the page */
 }
 
+.intern_left_panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 20rem;
+    height: 100%;
+}
+
+.search_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+
+.search_wrapper .searchBy, 
+.search_wrapper .search {
+    width: 100% ;
+    margin: 0; 
+}
+
 .intern_form_container {
-     
+    display: block; 
+    height: auto;
+    width: 100%;
+}
+
+.intern_form_container {
     display: flex;
     justify-content: left; 
     align-items: center;     
@@ -550,8 +577,6 @@ table tr:last-child td {
     width: 20rem;
     overflow-y: auto;
 }
-
-
 
 .intern_table_wrapper {
     flex: 1; 

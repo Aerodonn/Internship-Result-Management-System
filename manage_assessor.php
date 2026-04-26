@@ -153,9 +153,15 @@ foreach ($rows as $row) {
 
         <section class="Searchbar">
             <div>
-                <input type="search" class="search" placeholder="🔍 Search students…" id="searchStudent">
+                <select class="searchBy" id="searchType">
+                    <option value="assessor">Search by Assessor ID</option>
+                    <option value="attributes">Search by Attributes</option>
+                </select>
+
+                <input type="search" class="search" placeholder="🔍 Search..." id="searchStudent">
+                
                 <select class="statusSearch" id="statusFilter">
-                    <option value>All Status</option>
+                    <option value="">All Status</option>
                     <option value="Drafting">Drafting</option>
                     <option value="In Progress">In Progress</option>
                     <option value="Suspended">Suspended</option>

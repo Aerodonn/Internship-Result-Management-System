@@ -79,7 +79,7 @@ $sql = "
     LEFT JOIN assessor  a1 ON i.lecturer_id   = a1.user_id
     LEFT JOIN assessor  a2 ON i.supervisor_id = a2.user_id
     WHERE i.lecturer_id = ? OR i.supervisor_id = ?
-    ORDER BY s.student_name ASC
+    ORDER BY s.student_id ASC
 ";
 
 $result = executePreparedStatement($sql, [$userID,$userID]);
@@ -167,9 +167,15 @@ foreach ($rows as $row) {
 
         <section class="Searchbar">
             <div>
-                <input type="search" class="search" placeholder="🔍 Search students…" id="searchStudent">
+                <select class="searchBy" id="searchType">
+                    <option value="student">Search by Student ID</option>
+                    <option value="attributes">Search by Attributes</option>
+                </select>
+
+                <input type="search" class="search" placeholder="🔍 Search..." id="searchStudent">
+                
                 <select class="statusSearch" id="statusFilter">
-                    <option value>All Status</option>
+                    <option value="">All Status</option>
                     <option value="Drafting">Drafting</option>
                     <option value="In Progress">In Progress</option>
                     <option value="Suspended">Suspended</option>
@@ -177,9 +183,6 @@ foreach ($rows as $row) {
                     <option value="Complete">Complete</option>
                 </select>
             </div>
-            <button class="btn-add" onclick="openAddForm()">
-                <i class="fa-solid fa-marker"></i> Mark
-            </button>
         </section>
 
         <section class="data">

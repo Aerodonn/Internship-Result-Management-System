@@ -143,58 +143,69 @@ $supervisors = $supervisors_result->fetch_all(MYSQLI_ASSOC);
     </header>
 
     <main>
+
         <section class="assign_internBlock">
-            <div class="intern_form_container">
-                <form class="intern_form" method="POST" action="assign_internship.php">
-                    <h2>Assign Internship</h2>
-                    <input type="hidden" name="action" value="add">
-
-                    <label for="add_student_id">Student ID</label>
-                    <input type="text" name="student_id" id="add_student_id" required>
-
-                    <label for="add_lecturer_id">Lecturer</label>
-                    <select name="lecturer_id" id="add_lecturer_id" required>
-                        <option value="">Select Lecturer</option>
-                        <?php foreach ($lecturers as $lecturer): ?>
-                            <option value="<?php echo $lecturer['user_id']; ?>">
-                                <?php echo htmlspecialchars($lecturer['full_name']); ?> (ID: <?php echo $lecturer['user_id']; ?>)
-                            </option>
-                        <?php endforeach; ?>
+            <div class="intern_left_panel">
+                <div class="search_wrapper">
+                    <select class="searchBy" id="searchType">
+                        <option value="intern">Search by Intern ID</option>
+                        <option value="student">Search by Student ID</option>
+                        <option value="attributes">Search by Attributes</option>
                     </select>
+                    <input type="search" class="search" placeholder="🔍 Search..." id="searchStudent">
+                </div>
+                <div class="intern_form_container">
+                    <form class="intern_form" method="POST" action="assign_internship.php">
+                        <h2>Assign Internship</h2>
+                        <input type="hidden" name="action" value="add">
 
-                    <label for="add_supervisor_id">Supervisor</label>
-                    <select name="supervisor_id" id="add_supervisor_id" required>
-                        <option value="">Select Supervisor</option>
-                        <?php foreach ($supervisors as $supervisor): ?>
-                            <option value="<?php echo $supervisor['user_id']; ?>">
-                                <?php echo htmlspecialchars($supervisor['full_name']); ?> (ID: <?php echo $supervisor['user_id']; ?>)
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                    
-                    <label for="add_company">Company</label>
-                    <input type="text" name="company" id="add_company" required>
+                        <label for="add_student_id">Student ID</label>
+                        <input type="text" name="student_id" id="add_student_id" required>
 
-                    <label for="add_start_date">Start Date</label>
-                    <input type="date" name="start_date" id="add_start_date" required>
+                        <label for="add_lecturer_id">Lecturer</label>
+                        <select name="lecturer_id" id="add_lecturer_id" required>
+                            <option value="">Select Lecturer</option>
+                            <?php foreach ($lecturers as $lecturer): ?>
+                                <option value="<?php echo $lecturer['user_id']; ?>">
+                                    <?php echo htmlspecialchars($lecturer['full_name']); ?> (ID: <?php echo $lecturer['user_id']; ?>)
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
 
-                    <label for="end_start_date">End Date</label>
-                    <input type="date" name="end_date" id="end_start_date" required>
+                        <label for="add_supervisor_id">Supervisor</label>
+                        <select name="supervisor_id" id="add_supervisor_id" required>
+                            <option value="">Select Supervisor</option>
+                            <?php foreach ($supervisors as $supervisor): ?>
+                                <option value="<?php echo $supervisor['user_id']; ?>">
+                                    <?php echo htmlspecialchars($supervisor['full_name']); ?> (ID: <?php echo $supervisor['user_id']; ?>)
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        
+                        <label for="add_company">Company</label>
+                        <input type="text" name="company" id="add_company" required>
 
-                    <label for="add_report_status">Status</label>
-                    <select name="report_status" class="add_report_status">
-                        <option value="Drafting">Drafting</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Suspended">Suspended</option>
-                        <option value="Finalisation">Finalisation</option>
-                        <option value="Complete">Complete</option>
-                    </select>
-                    <div class="form-actions">
-                        <button type="reset" class="btn-cancel">Reset</button>
-                        <button type="submit" class="btn-save"><i class="fa-solid fa-floppy-disk"></i> Save Internship</button>
-                    </div>
+                        <label for="add_start_date">Start Date</label>
+                        <input type="date" name="start_date" id="add_start_date" required>
 
-                </form>
+                        <label for="end_start_date">End Date</label>
+                        <input type="date" name="end_date" id="end_start_date" required>
+
+                        <label for="add_report_status">Status</label>
+                        <select name="report_status" class="add_report_status">
+                            <option value="Drafting">Drafting</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Suspended">Suspended</option>
+                            <option value="Finalisation">Finalisation</option>
+                            <option value="Complete">Complete</option>
+                        </select>
+                        <div class="form-actions">
+                            <button type="reset" class="btn-cancel">Reset</button>
+                            <button type="submit" class="btn-save"><i class="fa-solid fa-floppy-disk"></i> Save Internship</button>
+                        </div>
+
+                    </form>
+                </div>
             </div>
 
             <div class="intern_table_wrapper">
@@ -262,7 +273,7 @@ $supervisors = $supervisors_result->fetch_all(MYSQLI_ASSOC);
         </section>
     </main>
 
-    //edit button
+    <!-- edit button -->
     <div class="form-overlay" id="editForm">
         <div class="form">
             <h3><i class="fa-solid fa-pen"></i> Edit Internship</h3>
