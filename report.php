@@ -105,6 +105,9 @@ $final = [];
                     <li class="list"><a href="myStudents.php"><i class="fa-solid fa-chalkboard-user"></i> Assessor</a></li>
                 <?php endif; ?>
                 <li class="list"><a href="results.php"><i class="fa-solid fa-chart-bar"></i> Result</a></li>
+                <?php if ($_SESSION['SystemRole'] === 'Admin'): ?>
+                    <li class="list"><a href="report.php"><i class="fa-solid fa-chalkboard-user"></i>Report</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
         <section class="navbar_loginUser">
@@ -120,8 +123,8 @@ $final = [];
 
     <section>
             <article class="Dashboard_msg">
-                <h1>Assigned Students</h1>
-                <p>All students assigned to you.</p>
+                <h1>Internship Reports</h1>
+                <p>All internship reports in the database, sorted by internship</p>
             </article>
 
             <article class="mainDash">
@@ -129,7 +132,7 @@ $final = [];
                     <span class="StudentIcon"><i class="fa-solid fa-user-graduate"></i></span>
                     <span> <!-- outputing total students nums -->
                         <h2><?php echo $totalStudents; ?></h2>
-                        <p>Students assigned</p>
+                        <p>Internships</p>
                     </span>
                 </div>
                 <div class="marks_submitted">
@@ -243,7 +246,7 @@ $final = [];
 
 <footer>
     <section class="footer">
-        <p>© 2026 University of Nottingham Malaysia — Internship System</p>
+        <p>© 2026 University of Nottingham Malaysia — Internship Result Management System — Group 39</p>
     </section>
 </footer>
 <script src="javascript/SearchReport.js"></script>
