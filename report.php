@@ -4,7 +4,6 @@ session_start();
 
 include 'connect.php';
 include 'prepared_statements.php';
-include 'action_result.php';
 
 $userID = $_SESSION['UserID']; // fallback to 2 for testing
 
@@ -12,26 +11,6 @@ if ($_SESSION['SystemRole'] !== 'Admin') {
     header("Location: login.php");
     exit();
 };
-// handle edit
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
-    if ($_POST['action'] === 'edit' && isset($_POST['report_id'])) {
-        updateReport(
-            $_POST['task_score'],
-            $_POST['safety_score'],
-            $_POST['theory_score'],
-            $_POST['present_score'],
-            $_POST['clarity_score'],
-            $_POST['learning_score'],
-            $_POST['proj_mgmt_score'],
-            $_POST['time_mgmt_score'],
-            $_POST['comment'],
-            $_POST['report_id']
-        );
-        updateStatus($_POST['report_status'], $_POST['intern_id']);
-        header("Location: results.php");
-        exit();
-    }
-}
 
 // Fixed: all column names changed to snake_case to match DB schema
 
@@ -40,25 +19,42 @@ $sql = "
         s.student_id            AS student_id,
         s.student_name          AS student_name,
         i.intern_id             AS intern_id,
-        Ar.assessor_id          AS assessor_id,
-        a.full_name             AS assessor_name,
+        i.supervisor_id         AS supervisor_id,
+        i.lecturer_id           AS lecturer_id,
+        a1.full_name            AS lecturer_name,
+        a2.full_name            AS supervisor_name,
         i.report_status         AS report_status,
-        Ar.report_id            AS report_id,
-        Ar.task_score           AS task_score,
-        Ar.safety_score         AS safety_score,
-        Ar.theory_score         AS theory_score,
-        Ar.present_score        AS present_score,
-        Ar.clarity_score        AS clarity_score,
-        Ar.learning_score       AS learning_score,
-        Ar.proj_mgmt_score      AS proj_mgmt_score,
-        Ar.time_mgmt_score      AS time_mgmt_score,
-        Ar.comment              AS comment,
-        Ar.total_marks          AS total_marks
-    FROM internship_report Ar
-    JOIN internship i ON i.intern_id = Ar.intern_id
+        Ar1.report_id           AS lecturer_report_id,
+        Ar1.task_score          AS lecturer_task_score,
+        Ar1.safety_score        AS lecturer_safety_score,
+        Ar1.theory_score        AS lecturer_theory_score,
+        Ar1.present_score       AS lecturer_present_score,
+        Ar1.clarity_score       AS lecturer_clarity_score,
+        Ar1.learning_score      AS lecturer_learning_score,
+        Ar1.proj_mgmt_score     AS lecturer_proj_mgmt_score,
+        Ar1.time_mgmt_score     AS lecturer_time_mgmt_score,
+        Ar1.comment             AS lecturer_comment,
+        Ar2.report_id           AS supervisor_report_id,
+        Ar2.task_score          AS supervisor_task_score,
+        Ar2.safety_score        AS supervisor_safety_score,
+        Ar2.theory_score        AS supervisor_theory_score,
+        Ar2.present_score       AS supervisor_present_score,
+        Ar2.clarity_score       AS supervisor_clarity_score,
+        Ar2.learning_score      AS supervisor_learning_score,
+        Ar2.proj_mgmt_score     AS supervisor_proj_mgmt_score,
+        Ar2.time_mgmt_score     AS supervisor_time_mgmt_score,
+        Ar2.comment             AS supervisor_comment
+    FROM internship i
+    JOIN internship_report Ar1 
+        ON i.intern_id = Ar1.intern_id
+        AND i.lecturer_id = Ar1.assessor_id
+    JOIN internship_report Ar2 
+        ON i.intern_id = Ar2.intern_id
+        AND i.supervisor_id = Ar2.assessor_id
     JOIN student   s  ON s.student_id = i.student_id  
-    JOIN assessor a ON a.user_id = Ar.assessor_id
-    ORDER BY s.student_name ASC
+    JOIN assessor a1 ON i.lecturer_id = a1.user_id
+    JOIN assessor a2 ON i.supervisor_id = a2.user_id
+    ORDER BY i.intern_id ASC
 ";
 $result = executePreparedStatement($sql, []);
 
@@ -88,7 +84,7 @@ $final = [];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Results</title>
+    <title>Report</title>
     <link rel="stylesheet" href="style/results.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -173,15 +169,17 @@ $final = [];
             <table>
                 <thead>
                     <tr>
-                        <th>Report ID</th>
                         <th>Intern ID</th>
                         <th>Intern Name</th>
-                        <th>Assessor ID</th>
-                        <th>Assessor Name</th>
-                        <th>Marks</th>
-                        <th>Comments</th>
+                        <th>Lecturer ID</th>
+                        <th>Lecturer Name</th>
+                        <th>Lecturer Marks</th>
+                        <th>Lecturer Comments</th>
+                        <th>Supervisor ID</th>
+                        <th>Supervisor Name</th>
+                        <th>Supervisor Marks</th>
+                        <th>Supervisor Comments</th>
                         <th>Status</th>
-                        <th>Mark</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -192,19 +190,31 @@ $final = [];
                         <?php else: ?> <!-- if not, loop through each rows of data and output each attribute values -->
                             <?php foreach ($rows as $row): ?>
                                 <tr data-status="<?php echo htmlspecialchars($row['report_status'] ?? ''); ?>">
-                                    <td><?php echo htmlspecialchars($row['report_id']); ?></td>
                                     <td><?php echo htmlspecialchars($row['intern_id']); ?></td>
                                     <td><?php echo htmlspecialchars($row['student_name']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['assessor_id']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['assessor_name']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['lecturer_id']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['lecturer_name']); ?></td>
                                     <td><?php 
                                     $weighted_score =
-                                    $row['task_score']*0.1 + $row['safety_score']*0.1 + $row['theory_score']*0.1 + 
-                                    $row['present_score']*0.15 + $row['clarity_score']*0.1 + $row['learning_score']*0.15 + 
-                                    $row['proj_mgmt_score']*0.15 + $row['time_mgmt_score']*0.15;
+                                    $row['lecturer_task_score']*0.1 + $row['lecturer_safety_score']*0.1 + 
+                                    $row['lecturer_theory_score']*0.1 + $row['lecturer_present_score']*0.15 + 
+                                    $row['lecturer_clarity_score']*0.1 + $row['lecturer_learning_score']*0.15 + 
+                                    $row['lecturer_proj_mgmt_score']*0.15 + $row['lecturer_time_mgmt_score']*0.15;
                                     echo htmlspecialchars(number_format($weighted_score, 2));
                                     ?></td>
-                                    <td><?php echo htmlspecialchars($row['comment'] ?? ''); ?></td>
+                                    <td><?php echo htmlspecialchars($row['lecturer_comment'] ?? ''); ?></td>
+
+                                    <td><?php echo htmlspecialchars($row['supervisor_id']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['supervisor_name']); ?></td>
+                                    <td><?php 
+                                    $weighted_score =
+                                    $row['supervisor_task_score']*0.1 + $row['supervisor_safety_score']*0.1 + 
+                                    $row['supervisor_theory_score']*0.1 + $row['supervisor_present_score']*0.15 + 
+                                    $row['supervisor_clarity_score']*0.1 + $row['supervisor_learning_score']*0.15 + 
+                                    $row['supervisor_proj_mgmt_score']*0.15 + $row['supervisor_time_mgmt_score']*0.15;
+                                    echo htmlspecialchars(number_format($weighted_score, 2));
+                                    ?></td>
+                                    <td><?php echo htmlspecialchars($row['supervisor_comment'] ?? ''); ?></td>
                                     <td> <!-- Changing the class depending on the status so the program CSS changes accordingly -->
                                         <?php
                                         $statusClass = match($row['report_status']) {
@@ -220,26 +230,6 @@ $final = [];
                                             <?php echo htmlspecialchars($row['report_status'] ?? 'N/A'); ?>
                                         </span>
                                     </td>
-                                    <td>
-                                        <!-- mark button -->
-                                        <button class="btn-add" onclick="openEditForm(
-                                            '<?php echo htmlspecialchars($row['report_id']); ?>',
-                                            '<?php echo htmlspecialchars($row['intern_id']); ?>',
-                                            '<?php echo htmlspecialchars($row['student_name']); ?>',
-                                            '<?php echo htmlspecialchars($row['task_score']); ?>',
-                                            '<?php echo htmlspecialchars($row['safety_score']); ?>',
-                                            '<?php echo htmlspecialchars($row['theory_score']); ?>',
-                                            '<?php echo htmlspecialchars($row['present_score']); ?>',
-                                            '<?php echo htmlspecialchars($row['clarity_score']); ?>',
-                                            '<?php echo htmlspecialchars($row['learning_score']); ?>',
-                                            '<?php echo htmlspecialchars($row['proj_mgmt_score']); ?>',
-                                            '<?php echo htmlspecialchars($row['time_mgmt_score']); ?>',
-                                            '<?php echo htmlspecialchars($row['report_status']); ?>',
-                                            '<?php echo htmlspecialchars($row['comment'] ?? ''); ?>',
-                                        )">
-                                            <i class="fa-solid fa-marker"></i> Mark
-                                        </button>
-                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php endif; ?>
@@ -251,66 +241,12 @@ $final = [];
 
 </main>
 
-    <!-- Edit Form -->
-    <div class="form-overlay" id="editForm">
-        <div class="form">
-            <h3><i class="fa-solid fa-pen"></i> Mark</h3>
-            <form method="POST">
-                <input type="hidden" name="action" value="edit">
-                <input type="hidden" name="report_id" id="report_id">
-                <input type="hidden" name="intern_id" id="intern_id">
-                <input type="hidden" name="assessor_id" id="assessor_id">
-
-                <label for="task_score">Task Score</label>
-                <input type="number" name="task_score" id="task_score" required min="0" max="100">
-
-                <label for="safety_score">Safety Score</label>
-                <input type="number" name="safety_score" id="safety_score" required min="0" max="100">
-
-                <label for="theory_score">Theory Score</label>
-                <input type="number" name="theory_score" id="theory_score" required min="0" max="100">
-
-                <label for="present_score">Presentation Score</label>
-                <input type="number" name="present_score" id="present_score" required min="0" max="100">
-
-                <label for="clarity_score">Clarity Score</label>
-                <input type="number" name="clarity_score" id="clarity_score" required min="0" max="100">
-
-                <label for="learning_score">Learning Score</label>
-                <input type="number" name="learning_score" id="learning_score" required min="0" max="100">
-
-                <label for="proj_mgmt_score">Project Management Score</label>
-                <input type="number" name="proj_mgmt_score" id="proj_mgmt_score" required min="0" max="100">
-
-                <label for="time_mgmt_score">Time Management Score</label>
-                <input type="number" name="time_mgmt_score" id="time_mgmt_score" required min="0" max="100">
-
-                <label for="comment">Comment</label>
-                <input type="text" name="comment" id="comment">
-
-                <label for="form_account_status">Account Status</label>
-                <select name="report_status" id="report_status">
-                    <option value="Drafting">Drafting</option>
-                    <option value="In Progress">In Progress</option>
-                    <option value="Suspended">Suspended</option>
-                    <option value="Finalisation">Finalisation</option>
-                    <option value="Complete">Complete</option>
-                </select>
-
-                <div class="form-actions">
-                    <button type="button" class="btn-cancel" onclick="closeEditForm()">Cancel</button>
-                    <button type="submit" class="btn-save"><i class="fa-solid fa-floppy-disk"></i> Update Profile</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
 <footer>
     <section class="footer">
         <p>© 2026 University of Nottingham Malaysia — Internship System</p>
     </section>
 </footer>
-<script src="javascript/SearchResults.js"></script>
+<script src="javascript/SearchReport.js"></script>
 
 </body>
 </html>

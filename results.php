@@ -225,7 +225,7 @@ $final = [];
                                     $row['proj_mgmt_score']*0.15 + $row['time_mgmt_score']*0.15;
                                     echo htmlspecialchars(number_format($weighted_score, 2));
                                     ?></td>
-                                    <td><?php echo htmlspecialchars($row['comment']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['comment'] ?? ''); ?></td>
                                     <td> <!-- Changing the class depending on the status so the program CSS changes accordingly -->
                                         <?php
                                         $statusClass = match($row['report_status']) {
@@ -255,7 +255,7 @@ $final = [];
                                             '<?php echo htmlspecialchars($row['proj_mgmt_score']); ?>',
                                             '<?php echo htmlspecialchars($row['time_mgmt_score']); ?>',
                                             '<?php echo htmlspecialchars($row['report_status']); ?>',
-                                            '<?php echo htmlspecialchars($row['comment']); ?>',
+                                            '<?php echo htmlspecialchars($row['comment'] ?? ''); ?>',
                                         )">
                                             <i class="fa-solid fa-marker"></i> Mark
                                         </button>

@@ -57,7 +57,7 @@ $totalAssessor = $assessor_row['total_count'];
 <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <title>Page Title</title>
+    <title>Dashboard</title>
     <link rel='stylesheet' href='style\results.css'>
      <!-- i used Awesome Font website's fonts so i added a link to it to assess the font. -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">    
