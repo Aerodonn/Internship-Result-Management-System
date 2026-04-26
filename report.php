@@ -182,6 +182,7 @@ $final = [];
                         <th>Supervisor Name</th>
                         <th>Supervisor Marks</th>
                         <th>Supervisor Comments</th>
+                        <th>Avg Mark</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -218,6 +219,19 @@ $final = [];
                                     echo htmlspecialchars(number_format($weighted_score, 2));
                                     ?></td>
                                     <td><?php echo htmlspecialchars($row['supervisor_comment'] ?? ''); ?></td>
+                                    <td><?php 
+                                    $weighted_score =
+                                    $row['lecturer_task_score']*0.1 + $row['lecturer_safety_score']*0.1 + 
+                                    $row['lecturer_theory_score']*0.1 + $row['lecturer_present_score']*0.15 + 
+                                    $row['lecturer_clarity_score']*0.1 + $row['lecturer_learning_score']*0.15 + 
+                                    $row['lecturer_proj_mgmt_score']*0.15 + $row['lecturer_time_mgmt_score']*0.15 + 
+                                    $row['supervisor_task_score']*0.1 + $row['supervisor_safety_score']*0.1 + 
+                                    $row['supervisor_theory_score']*0.1 + $row['supervisor_present_score']*0.15 + 
+                                    $row['supervisor_clarity_score']*0.1 + $row['supervisor_learning_score']*0.15 + 
+                                    $row['supervisor_proj_mgmt_score']*0.15 + $row['supervisor_time_mgmt_score']*0.15;
+                                    $weighted_score /= 2;
+                                    echo htmlspecialchars(number_format($weighted_score, 2));
+                                    ?></td>
                                     <td> <!-- Changing the class depending on the status so the program CSS changes accordingly -->
                                         <?php
                                         $statusClass = match($row['report_status']) {

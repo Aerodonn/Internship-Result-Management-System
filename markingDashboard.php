@@ -136,7 +136,7 @@ $final = [];
                     <span class="StudentIcon"><i class="fa-solid fa-user-graduate"></i></span>
                     <span> <!-- outputing total students nums -->
                         <h2><?php echo $totalStudents; ?></h2>
-                        <p>Internship Markings avaliable</p>
+                        <p>Internship Markings   avaliable</p>
                     </span>
                 </div>
                 <div class="marks_submitted">
