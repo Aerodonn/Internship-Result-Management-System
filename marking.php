@@ -50,8 +50,7 @@ $sql = "
         Ar.learning_score       AS learning_score,
         Ar.proj_mgmt_score      AS proj_mgmt_score,
         Ar.time_mgmt_score      AS time_mgmt_score,
-        Ar.comment              AS comment,
-        Ar.total_marks          AS total_marks
+        Ar.comment              AS comment
     FROM internship_report Ar
     JOIN internship i ON i.intern_id = Ar.intern_id
     JOIN student   s  ON s.student_id = i.student_id

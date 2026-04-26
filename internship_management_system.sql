@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 24, 2026 at 04:02 PM
+-- Generation Time: Apr 26, 2026 at 08:33 AM
 -- Server version: 5.7.24
 -- PHP Version: 8.3.1
 
@@ -99,8 +99,7 @@ CREATE TABLE `internship_report` (
   `learning_score` decimal(5,2) DEFAULT '0.00',
   `proj_mgmt_score` decimal(5,2) DEFAULT '0.00',
   `time_mgmt_score` decimal(5,2) DEFAULT '0.00',
-  `comment` text,
-  `total_marks` decimal(5,2) GENERATED ALWAYS AS ((((((((`task_score` + `safety_score`) + `theory_score`) + `present_score`) + `clarity_score`) + `learning_score`) + `proj_mgmt_score`) + `time_mgmt_score`)) VIRTUAL
+  `comment` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -112,7 +111,7 @@ INSERT INTO `internship_report` (`report_id`, `intern_id`, `assessor_id`, `task_
 (6, 1, 3, 100.00, 100.00, 100.00, 100.00, 100.00, 100.00, 100.00, 100.00, 'Supervisor - Good employee'),
 (7, 2, 2, 85.00, 78.00, 92.00, 88.00, 80.00, 75.00, 84.00, 90.00, 'Excellent technical skills shown.'),
 (8, 2, 3, 80.00, 82.00, 85.00, 75.00, 78.00, 80.00, 82.00, 85.00, 'Reliable and proactive team player.'),
-(9, 3, 9, 65.00, 70.00, 68.00, 72.00, 60.00, 75.00, 68.00, 70.00, 'Needs improvement in documentation.'),
+(9, 3, 9, 65.00, 70.00, 68.00, 50.00, 60.00, 75.00, 68.00, 70.00, 'Needs improvement in documentation.'),
 (10, 3, 10, 70.00, 68.00, 75.00, 65.00, 70.00, 68.00, 72.00, 65.00, 'Satisfactory performance overall.'),
 (11, 4, 12, 95.00, 90.00, 88.00, 92.00, 95.00, 85.00, 90.00, 92.00, 'Outstanding project management skills.'),
 (12, 4, 13, 90.00, 88.00, 85.00, 90.00, 88.00, 92.00, 85.00, 90.00, 'Very professional conduct.'),
