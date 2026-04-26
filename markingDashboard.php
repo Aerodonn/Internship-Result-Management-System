@@ -4,7 +4,7 @@ session_start();
 
 include 'connect.php';
 include 'prepared_statements.php';
-include 'action_result.php';
+include 'action_marking.php';
 
 $userID = $_SESSION['UserID']; // fallback to 2 for testing
 
@@ -108,9 +108,9 @@ $final = [];
                 <?php if ($_SESSION['SystemRole'] === 'Assessor'): ?><!-- added an if statement so that assessor pages are only visabl assesor-->
                     <li class="list"><a href="myStudents.php"><i class="fa-solid fa-chalkboard-user"></i> Assessor</a></li>
                 <?php endif; ?>
-                <li class="list"><a href="results.php"><i class="fa-solid fa-chart-bar"></i> Result</a></li>
+                <li class="list"><a href="marking.php"><i class="fa-solid fa-chart-bar"></i> Marking</a></li>
                 <?php if ($_SESSION['SystemRole'] === 'Admin'): ?>
-                    <li class="list"><a href="report.php"><i class="fa-solid fa-chalkboard-user"></i>Report</a></li>
+                    <li class="list"><a href="report.php"><i class="fa-solid fa-chalkboard-user"></i> Report</a></li>
                 <?php endif; ?>
             </ul>
         </nav>
@@ -127,8 +127,8 @@ $final = [];
 
     <section>
             <article class="Dashboard_msg">
-                <h1>Assigned Internships</h1>
-                <p>All internship assigned to you, for marking.</p>
+                <h1>Internship Marking</h1>
+                <p>Every single internship report, avaliable for edit.</p>
             </article>
 
             <article class="mainDash">
@@ -136,7 +136,7 @@ $final = [];
                     <span class="StudentIcon"><i class="fa-solid fa-user-graduate"></i></span>
                     <span> <!-- outputing total students nums -->
                         <h2><?php echo $totalStudents; ?></h2>
-                        <p>Internships assigned</p>
+                        <p>Internship Markings avaliable</p>
                     </span>
                 </div>
                 <div class="marks_submitted">
@@ -313,7 +313,7 @@ $final = [];
         <p>© 2026 University of Nottingham Malaysia — Internship Result Management System — Group 39</p>
     </section>
 </footer>
-<script src="javascript/SearchResults.js"></script>
+<script src="javascript/SearchMarks.js"></script>
 
 </body>
 </html>

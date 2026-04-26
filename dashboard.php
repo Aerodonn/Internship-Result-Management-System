@@ -77,7 +77,7 @@ $totalAssessor = $assessor_row['total_count'];
                 <?php if ($_SESSION['SystemRole'] === 'Assessor'): ?><!-- added an if statement so that assessor pages are only visabl assesor-->
                     <li class="list"><a href="myStudents.php"><i class="fa-solid fa-chalkboard-user"></i> Assessor</a></li>
                 <?php endif; ?>
-                <li class="list"><a href="results.php"><i class="fa-solid fa-chart-bar"></i> Result</a></li>
+                <li class="list"><a href="marking.php"><i class="fa-solid fa-chart-bar"></i> Marking</a></li>
                 <?php if ($_SESSION['SystemRole'] === 'Admin'): ?>
                     <li class="list"><a href="report.php"><i class="fa-solid fa-chalkboard-user"></i>Report</a></li>
                 <?php endif; ?>

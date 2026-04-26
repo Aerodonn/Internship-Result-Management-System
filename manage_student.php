@@ -109,7 +109,10 @@ foreach ($report_rows as $row) {
                 <?php if ($_SESSION['SystemRole'] === 'Assessor'): ?>
                     <li class="list"><a href="myStudents.php"><i class="fa-solid fa-chalkboard-user"></i> Assessor</a></li>
                 <?php endif; ?>
-                <li class="list"><a href="results.php"><i class="fa-solid fa-chart-bar"></i> Result</a></li>
+                <li class="list"><a href="marking.php"><i class="fa-solid fa-chart-bar"></i> Marking</a></li>
+                <?php if ($_SESSION['SystemRole'] === 'Admin'): ?>
+                    <li class="list"><a href="report.php"><i class="fa-solid fa-chalkboard-user"></i> Report</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
         <section class="navbar_loginUser">
