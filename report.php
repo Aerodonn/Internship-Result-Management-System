@@ -152,19 +152,27 @@ $final = [];
             </article>
         </section>
 
-        <section class="SearchbarDash">
-            <div>
-                <input type="search" class="search" placeholder="🔍 Search students…" id="searchStudent">
-                <select class="statusSearch" id="statusFilter">
-                    <option value>All Status</option>
-                    <option value="Drafting">Drafting</option>
-                    <option value="In Progress">In Progress</option>
-                    <option value="Suspended">Suspended</option>
-                    <option value="Finalisation">Finalisation</option>
-                    <option value="Complete">Complete</option>
-                </select>
-            </div>
-        </section>
+    <section class="SearchbarDash">
+        <div>
+            <select class="searchBy" id="searchType">
+                <option value="intern">Search by Intern ID</option>
+                <option value="lecturer">Search by Lecturer ID</option>
+                <option value="supervisor">Search by Supervisor ID</option>
+                <option value="attributes">Search by Attributes</option>
+            </select>
+
+            <input type="search" class="search" placeholder="🔍 Search..." id="searchStudent">
+            
+            <select class="statusSearch" id="statusFilter">
+                <option value="">All Status</option>
+                <option value="Drafting">Drafting</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Suspended">Suspended</option>
+                <option value="Finalisation">Finalisation</option>
+                <option value="Complete">Complete</option>
+            </select>
+        </div>
+    </section>
 
     <section class="data">
         <article class="realData">

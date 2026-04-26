@@ -138,15 +138,21 @@ $totalAssessor = $assessor_row['total_count'];
         </section>
         <section class="SearchbarDash">
             <div>
-                <input type="search" class="search" placeholder="🔍 Search students…" id="searchStudent">
-                <select class="statusSearch" id="statusFilter">
-                    <option value>All Status</option>
-                    <option value="Drafting">Drafting</option>
-                    <option value="In Progress">In Progress</option>
-                    <option value="Suspended">Suspended</option>
-                    <option value="Finalisation">Finalisation</option>
-                    <option value="Complete">Complete</option>
-                </select>
+            <select class="searchBy" id="searchType">
+                <option value="student">Search by Student ID</option>
+                <option value="attributes">Search by Attributes</option>
+            </select>
+
+            <input type="search" class="search" placeholder="🔍 Search..." id="searchStudent">
+            
+            <select class="statusSearch" id="statusFilter">
+                <option value="">All Status</option>
+                <option value="Drafting">Drafting</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Suspended">Suspended</option>
+                <option value="Finalisation">Finalisation</option>
+                <option value="Complete">Complete</option>
+            </select>
             </div>
             <div>
                 <article class="sideBar">

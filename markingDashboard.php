@@ -57,7 +57,7 @@ $sql = "
     JOIN internship i ON i.intern_id = Ar.intern_id
     JOIN student   s  ON s.student_id = i.student_id  
     JOIN assessor a ON a.user_id = Ar.assessor_id
-    ORDER BY s.student_name ASC
+    ORDER BY Ar.report_id ASC
 ";
 $result = executePreparedStatement($sql, []);
 
@@ -157,9 +157,17 @@ $final = [];
 
         <section class="SearchbarDash">
             <div>
-                <input type="search" class="search" placeholder="🔍 Search students…" id="searchStudent">
+                <select class="searchBy" id="searchType">
+                    <option value="report">Search by Report ID</option>
+                    <option value="intern">Search by Intern ID</option>
+                    <option value="assessor">Search by Assessor ID</option>
+                    <option value="attributes">Search by Attributes</option>
+                </select>
+
+                <input type="search" class="search" placeholder="🔍 Search..." id="searchStudent">
+                
                 <select class="statusSearch" id="statusFilter">
-                    <option value>All Status</option>
+                    <option value="">All Status</option>
                     <option value="Drafting">Drafting</option>
                     <option value="In Progress">In Progress</option>
                     <option value="Suspended">Suspended</option>

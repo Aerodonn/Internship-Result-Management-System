@@ -509,6 +509,15 @@ table tr:last-child td {
     font-size: 1rem;
 }
 
+.searchBy{
+    width: 13rem;
+    height: 2rem;
+    border-radius: 1rem;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    text-align: left;
+    padding-left: 1.5rem;
+    font-size: 1rem;
+}
 
 .realData thead{
     position: sticky;
