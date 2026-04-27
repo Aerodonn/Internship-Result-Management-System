@@ -12,14 +12,15 @@ if (!isset($_SESSION['SystemRole']) || $_SESSION['SystemRole'] !== 'Assessor') {
 
 include 'connect.php';
 include 'prepared_statements.php';
-include 'action_students.php';
+include 'action_my_students.php';
 
 $userID = $_SESSION['UserID'];
 // handle delete
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
     if ($_POST['action'] === 'delete' && isset($_POST['intern_id'])) {
-        deleteStudent($_POST['intern_id']);
+        deleteStudentInternReport($_POST['intern_id']); //delete the internship reports first
+        deleteStudent($_POST['intern_id']); //then delete the internship record
         header("Location: myStudents.php");
         exit();
     }
@@ -35,26 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         header("Location: myStudents.php");
         exit();
     }
-// handle adding
-    if ($_POST['action'] === 'add') {
-        addStudent(
-            $_POST['student_regnum'],
-            $_POST['student_name'],
-            $_POST['student_email'],
-            $_POST['student_programme'],
-            $_POST['student_enrollment'],
-            $_POST['student_status'],
-            $_POST['company'],
-            $_POST['start_date'],
-            $_POST['end_date'],
-            $_POST['lecturer_id'],
-            $_POST['supervisor_id'],
-            $_POST['report_status']
-        );
-        header("Location: myStudents.php");
-        exit();
-    }
-    
 }
 
 //selecting the table columns/attributes needed for this page.
@@ -359,7 +340,7 @@ foreach ($rows as $row) {
         </section>
     </footer>
 
-<script src="javascript/SearchBarDashboard.js"></script>
+<script src="javascript/myStudents.js"></script>
 
 </body>
 </html>
