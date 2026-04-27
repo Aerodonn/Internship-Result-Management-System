@@ -8,14 +8,14 @@ please import it using MAMP/phpMyAdmin or whatever database management server so
 Preferably, start on the 
 ```login.php``` page, and fill in the credentials. They can be found in the user_login table, but for testing purposes, here are a few logins:
 
-admin
-Username:root
-Password:root
-
-supervisor (assessor)
-username:supervisor
-password:supervisor
-
-lecturer (assessor)
-username:lecturer
+admin   
+Username:root   
+Password:root   
+   
+supervisor (assessor)   
+username:supervisor   
+password:supervisor   
+   
+lecturer (assessor)   
+username:lecturer   
 password:lecturer
